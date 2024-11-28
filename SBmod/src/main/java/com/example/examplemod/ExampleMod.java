@@ -61,6 +61,12 @@ public class ExampleMod
                 output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
             }).build());
 
+    //Create the heads of K2536 and ExtremenovaIX
+    public static final RegistryObject<Block> HEAD_K2536 = BLOCKS.register("head_k2536", () -> new Block(BlockBehaviour.Properties.of()));
+
+    public static final RegistryObject<Block> HEAD_EXTREMENOVAIX = BLOCKS.register("head_extremenovaix", () -> new Block(BlockBehaviour.Properties.of()));
+
+
     public ExampleMod()
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
