@@ -61,10 +61,15 @@ public class ExampleMod
                 output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
             }).build());
 
-    //Create the heads of K2536 and ExtremenovaIX
-    public static final RegistryObject<Block> HEAD_K2536 = BLOCKS.register("head_k2536", () -> new Block(BlockBehaviour.Properties.of()));
+    //Create the heads of K2536 and ExtremenovaIX and Twilight_Builder
+    public static final RegistryObject<Block> HEAD_K2536_BLOCK = BLOCKS.register("head_k2536_block", () -> new Block(BlockBehaviour.Properties.of()));
+    public static final RegistryObject<Item> HEAD_K2536_BLOCK_ITEM = ITEMS.register("head_k2536_block", () -> new BlockItem(HEAD_K2536_BLOCK.get(), new Item.Properties()));
 
-    public static final RegistryObject<Block> HEAD_EXTREMENOVAIX = BLOCKS.register("head_extremenovaix", () -> new Block(BlockBehaviour.Properties.of()));
+    public static final RegistryObject<Block> HEAD_EXTREMENOVAIX_BLOCK = BLOCKS.register("head_extremenovaix_block", () -> new Block(BlockBehaviour.Properties.of()));
+    public static final RegistryObject<Item> HEAD_EXTREMENOVAIX_BLOCK_ITEM = ITEMS.register("head_extremenovaix_block", () -> new BlockItem(HEAD_K2536_BLOCK.get(), new Item.Properties()));
+
+    public static final RegistryObject<Block> HEAD_TWILIGHTBUILDER = BLOCKS.register("head.twilightbuilder_block", () -> new Block(BlockBehaviour.Properties.of()));
+    public static final RegistryObject<Item> HEAD_TWILIGHTBUILDER_BLOCK_ITEM = ITEMS.register("head_twilightbuilder_block", () -> new BlockItem(HEAD_K2536_BLOCK.get(), new Item.Properties()));
 
 
     public ExampleMod()
