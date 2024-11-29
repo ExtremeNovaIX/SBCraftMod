@@ -1,4 +1,4 @@
-package com.example.examplemod;
+package com.Twilight.SBMod;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
@@ -30,11 +30,11 @@ import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod(ExampleMod.MODID)
-public class ExampleMod
+@Mod(Main.MODID)
+public class Main
 {
     // Define mod id in a common place for everything to reference
-    public static final String MODID = "examplemod";
+    public static final String MODID = "sbmod";
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
     // Create a Deferred Register to hold Blocks which will all be registered under the "examplemod" namespace
@@ -72,7 +72,7 @@ public class ExampleMod
     public static final RegistryObject<Item> HEAD_TWILIGHTBUILDER_BLOCK_ITEM = ITEMS.register("head_twilightbuilder_block", () -> new BlockItem(HEAD_K2536_BLOCK.get(), new Item.Properties()));
 
 
-    public ExampleMod()
+    public Main()
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
