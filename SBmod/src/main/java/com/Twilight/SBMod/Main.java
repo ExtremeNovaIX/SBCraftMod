@@ -1,9 +1,13 @@
 package com.Twilight.SBMod;
 
+import com.Twilight.Entity.TwilightBuilderEntity;
 import com.Twilight.block.head_k2536_block;
 import com.Twilight.item.Shit;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -16,6 +20,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
+
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Main.MODID)
@@ -31,10 +36,10 @@ public class Main {
                     .sound(SoundType.METAL)));
     public static final RegistryObject<Block> HEAD_EXTREMENOVAIX_BLOCK = BLOCKS.register("head_extremenovaix_block", () -> new Block(BlockBehaviour.Properties.of().strength(1)));
     public static final RegistryObject<Block> HEAD_TWILIGHTBUILDER = BLOCKS.register("head_twilightbuilder_block", () -> new Block(BlockBehaviour.Properties.of().strength(1)));
-
+    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MODID);
 
     //Create the heads of K2536 and ExtremenovaIX and Twilight_Builder
-    // Create a Deferred Register to hold Items which will all be registered under the "examplemod" namespace
+
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final RegistryObject<Item> HEAD_K2536_BLOCK_ITEM = ITEMS.register("head_k2536_block", () -> new BlockItem(HEAD_K2536_BLOCK.get(), new Item.Properties()));
     public static final RegistryObject<Item> HEAD_EXTREMENOVAIX_BLOCK_ITEM = ITEMS.register("head_extremenovaix_block", () -> new BlockItem(HEAD_EXTREMENOVAIX_BLOCK.get(), new Item.Properties()));
@@ -46,9 +51,14 @@ public class Main {
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
 
+    public static final RegistryObject<EntityType<TwilightBuilderEntity>> TWILIGHT_BUILDER = ENTITIES.register("twilight_builder",
+            () -> EntityType.Builder.<TwilightBuilderEntity>of(TwilightBuilderEntity::new, MobCategory.CREATURE)
+                    .sized(0.6F, 1.8F)
+                    .build("twilight_builder"));
     public Main() {
         var bus = FMLJavaModLoadingContext.get().getModEventBus();
         BLOCKS.register(bus);
         ITEMS.register(bus);
+        ENTITIES.register(bus);
     }
 }
