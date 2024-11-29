@@ -7,10 +7,8 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -20,12 +18,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.Random;
-import java.util.Stack;
 
 
-public class HeadK2536Block extends Block {
+public class head_k2536_block extends Block {
 
-    public HeadK2536Block(Properties sound) {
+    public head_k2536_block(Properties sound) {
         // Let our block behave like a metal block
         super(Properties.of()
                 .strength(3.5F)

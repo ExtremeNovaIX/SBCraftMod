@@ -2,18 +2,18 @@
   "variants": {
     "": [
       {
-        "model": "sbmod:block/k2536"
+        "model": "sbmod:block/head_k2536_block"
       },
       {
-        "model": "sbmod:block/k2536",
+        "model": "sbmod:block/head_k2536_block",
         "y": 90
       },
       {
-        "model": "sbmod:block/k2536",
+        "model": "sbmod:block/head_k2536_block",
         "y": 180
       },
       {
-        "model": "sbmod:block/k2536",
+        "model": "sbmod:block/head_k2536_block",
         "y": 270
       }
     ]

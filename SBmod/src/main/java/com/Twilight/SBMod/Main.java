@@ -1,10 +1,9 @@
 package com.Twilight.SBMod;
 
-import com.Twilight.block.HeadK2536Block;
+import com.Twilight.block.head_k2536_block;
 import com.Twilight.item.Shit;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -18,8 +17,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
-import javax.swing.text.html.parser.Entity;
-
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Main.MODID)
 public class Main {
@@ -28,7 +25,7 @@ public class Main {
     // Create a Deferred Register to hold Blocks which will all be registered under the "examplemod" namespace
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final RegistryObject<Block> HEAD_K2536_BLOCK = BLOCKS.register("head_k2536_block",
-            () -> new HeadK2536Block(BlockBehaviour.Properties.of()
+            () -> new head_k2536_block(BlockBehaviour.Properties.of()
                     .strength(3.0f)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.METAL)));

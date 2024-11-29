@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "sbmod:block/head_twilightbuilder_block"
+      },
+      {
+        "model": "sbmod:block/head_twilightbuilder_block",
+        "y": 90
+      },
+      {
+        "model": "sbmod:block/head_twilightbuilder_block",
+        "y": 180
+      },
+      {
+        "model": "sbmod:block/head_twilightbuilder_block",
+        "y": 270
+      }
+    ]
+  }
+}
