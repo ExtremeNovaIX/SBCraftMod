@@ -1,5 +1,6 @@
 package com.Twilight.SBMod;
 
+import com.Twilight.item.Shit;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
@@ -55,6 +56,9 @@ public class Main
 
     public static final RegistryObject<Block> HEAD_TWILIGHTBUILDER = BLOCKS.register("head_twilightbuilder_block", () -> new Block(BlockBehaviour.Properties.of().strength(1)));
     public static final RegistryObject<Item> HEAD_TWILIGHTBUILDER_BLOCK_ITEM = ITEMS.register("head_twilightbuilder_block", () -> new BlockItem(HEAD_TWILIGHTBUILDER.get(), new Item.Properties()));
+
+    //Create Shit
+    public static final RegistryObject<Item> SHIT = ITEMS.register("shit", () -> new Shit(new Item.Properties()));
 
     public Main() {
         var bus = FMLJavaModLoadingContext.get().getModEventBus();
