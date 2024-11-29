@@ -56,6 +56,9 @@ public class Main
 
     public static final RegistryObject<Block> HEAD_TWILIGHTBUILDER = BLOCKS.register("head_twilightbuilder_block", () -> new Block(BlockBehaviour.Properties.of().strength(1)));
     public static final RegistryObject<Item> HEAD_TWILIGHTBUILDER_BLOCK_ITEM = ITEMS.register("head_twilightbuilder_block", () -> new BlockItem(HEAD_TWILIGHTBUILDER.get(), new Item.Properties()));
+    //Create sb_block
+    public static final RegistryObject<Block> BLOCK_SB = BLOCKS.register("block_sb", () -> new Block(BlockBehaviour.Properties.of().strength(0)));
+    public static final RegistryObject<Item> BLOCK_SB_ITEM = ITEMS.register("block_sb", () -> new BlockItem(BLOCK_SB.get(), new Item.Properties()));
 
     //Create Shit
     public static final RegistryObject<Item> SHIT = ITEMS.register("shit", () -> new Shit(new Item.Properties()));
