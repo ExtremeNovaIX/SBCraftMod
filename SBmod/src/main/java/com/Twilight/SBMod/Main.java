@@ -4,6 +4,7 @@ import com.Twilight.block.HeadK2536Block;
 import com.Twilight.item.Shit;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -16,6 +17,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
+
+import javax.swing.text.html.parser.Entity;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Main.MODID)
