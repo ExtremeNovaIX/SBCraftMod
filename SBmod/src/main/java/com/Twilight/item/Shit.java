@@ -18,17 +18,19 @@ public class Shit extends Item {
     public Shit(Properties p_41383_) {
         super(p_41383_);
     }
-    public InteractionResult useOn(UseOnContext p_186371_) {
-        Level level = p_186371_.getLevel();
-        BlockPos blockpos = p_186371_.getClickedPos();
+    public InteractionResult useOn(UseOnContext shit) {
+        Level level = shit.getLevel();
+        BlockPos blockpos = shit.getClickedPos();
         BlockState blockstate = level.getBlockState(blockpos);
         Block block = blockstate.getBlock();
 
         if (block == HEAD_K2536_BLOCK.get()){
-            Player player = p_186371_.getPlayer();
+            Player player = shit.getPlayer();
             player.addItem(new ItemStack(Items.DIAMOND));
+            var itemstack = shit.getItemInHand();
+            itemstack.shrink(1);
             return InteractionResult.sidedSuccess(level.isClientSide());
         }
-        return super.useOn(p_186371_);
+        return super.useOn(shit);
     }
 }
