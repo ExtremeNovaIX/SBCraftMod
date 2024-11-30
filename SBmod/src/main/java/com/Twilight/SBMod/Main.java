@@ -1,8 +1,8 @@
 package com.Twilight.SBMod;
 
-import com.Twilight.Entity.TwilightBuilderEntity;
-import com.Twilight.block.HeadK2536Block;
-import com.Twilight.item.Shit;
+import com.Twilight.ModEntity.TwilightBuilderEntity;
+import com.Twilight.ModBlock.HeadK2536Block;
+import com.Twilight.ModItems.Shit;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
