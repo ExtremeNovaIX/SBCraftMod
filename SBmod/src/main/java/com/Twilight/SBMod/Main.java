@@ -1,12 +1,11 @@
 package com.Twilight.SBMod;
 
 import com.Twilight.Entity.TwilightBuilderEntity;
-import com.Twilight.block.head_k2536_block;
+import com.Twilight.block.HeadK2536Block;
 import com.Twilight.item.Shit;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.*;
@@ -30,7 +29,7 @@ public class Main {
     // Create a Deferred Register to hold Blocks which will all be registered under the "examplemod" namespace
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final RegistryObject<Block> HEAD_K2536_BLOCK = BLOCKS.register("head_k2536_block",
-            () -> new head_k2536_block(BlockBehaviour.Properties.of()
+            () -> new HeadK2536Block(BlockBehaviour.Properties.of()
                     .strength(3.0f)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.METAL)));
