@@ -1,5 +1,6 @@
 package com.Twilight.SBMod;
 
+import com.Twilight.ModEntity.ModEntity;
 import com.Twilight.ModEntity.TwilightBuilderEntity;
 import com.Twilight.ModBlock.HeadK2536Block;
 import com.Twilight.ModItems.Shit;
@@ -49,10 +50,7 @@ public class Main {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     //Create Twilight_Builder
-    public static final RegistryObject<EntityType<TwilightBuilderEntity>> TWILIGHT_BUILDER = ENTITIES.register("twilight_builder",
-            () -> EntityType.Builder.<TwilightBuilderEntity>of(TwilightBuilderEntity::new, MobCategory.CREATURE)
-                    .sized(0.6F, 1.8F)
-                    .build("twilight_builder"));
+
     public Main() {
         var bus = FMLJavaModLoadingContext.get().getModEventBus();
         BLOCKS.register(bus);
@@ -60,6 +58,7 @@ public class Main {
         ENTITIES.register(bus);
         CREATIVE_MODE_TABS.register(bus);
         bus.addListener(this::addCreateTab);
+        ModEntity.ENTITIES.register(bus);
 
     }
     //Create Creative Mode Tab
