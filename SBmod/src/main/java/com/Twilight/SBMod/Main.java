@@ -5,15 +5,15 @@ import com.Twilight.block.head_k2536_block;
 import com.Twilight.item.Shit;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -46,11 +46,10 @@ public class Main {
     public static final RegistryObject<Item> HEAD_TWILIGHTBUILDER_BLOCK_ITEM = ITEMS.register("head_twilightbuilder_block", () -> new BlockItem(HEAD_TWILIGHTBUILDER.get(), new Item.Properties()));
     //Create Shit
     public static final RegistryObject<Item> SHIT = ITEMS.register("shit", () -> new Shit(new Item.Properties()));
-    // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "examplemod" namespace
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
 
+    //Create Twilight_Builder
     public static final RegistryObject<EntityType<TwilightBuilderEntity>> TWILIGHT_BUILDER = ENTITIES.register("twilight_builder",
             () -> EntityType.Builder.<TwilightBuilderEntity>of(TwilightBuilderEntity::new, MobCategory.CREATURE)
                     .sized(0.6F, 1.8F)
@@ -60,5 +59,31 @@ public class Main {
         BLOCKS.register(bus);
         ITEMS.register(bus);
         ENTITIES.register(bus);
+        CREATIVE_MODE_TABS.register(bus);
+        bus.addListener(this::addCreateTab);
+
     }
+    //Create Creative Mode Tab
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
+    public static final RegistryObject<CreativeModeTab> SBMOD_TAB = CREATIVE_MODE_TABS.register("sbmod_tab", () -> CreativeModeTab.builder()
+            .icon(() -> new ItemStack(HEAD_K2536_BLOCK_ITEM.get()))
+            .title(Component.translatable("MODID"))
+            .displayItems((parameters, output) -> {
+                output.accept(HEAD_K2536_BLOCK_ITEM.get());
+                output.accept(HEAD_EXTREMENOVAIX_BLOCK_ITEM.get());
+                output.accept(HEAD_TWILIGHTBUILDER_BLOCK_ITEM.get());
+                output.accept(SHIT.get());
+                // 添加更多物品
+            })
+            .build());
+    public void addCreateTab(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTab() == SBMOD_TAB.get()) {
+            event.accept(HEAD_K2536_BLOCK_ITEM.get());
+            event.accept(HEAD_EXTREMENOVAIX_BLOCK_ITEM.get());
+            event.accept(HEAD_TWILIGHTBUILDER_BLOCK_ITEM.get());
+            event.accept(SHIT.get());
+            // 添加更多物品
+        }
+    }
+
 }
