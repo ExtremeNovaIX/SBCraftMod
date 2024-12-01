@@ -1,21 +1,21 @@
 package com.Twilight.SBMod;
 
-import com.Twilight.ModEntity.ModEntity;
-import com.Twilight.ModEntity.TwilightBuilderEntity;
 import com.Twilight.ModBlock.HeadK2536Block;
 import com.Twilight.ModItems.Shit;
+import com.Twilight.ModSound.ModSound;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -23,7 +23,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
-import com.Twilight.ModSound.ModSound;
 
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -50,23 +49,10 @@ public class Main {
     public static final RegistryObject<Item> HEAD_TWILIGHTBUILDER_BLOCK_ITEM = ITEMS.register("head_twilightbuilder_block", () -> new BlockItem(HEAD_TWILIGHTBUILDER.get(), new Item.Properties()));
     //Create Shit
     public static final RegistryObject<Item> SHIT = ITEMS.register("shit", () -> new Shit(new Item.Properties()));
-    // Directly reference a slf4j logger
-    private static final Logger LOGGER = LogUtils.getLogger();
-
-    //Create Twilight_Builder
-
-    public Main() {
-        var bus = FMLJavaModLoadingContext.get().getModEventBus();
-        BLOCKS.register(bus);
-        ITEMS.register(bus);
-        ENTITIES.register(bus);
-        CREATIVE_MODE_TABS.register(bus);
-        ModEntity.ENTITIES.register(bus);
-        ModSound.register(bus);
-        bus.addListener(this::addCreateTab);
-    }
     //Create Creative Mode Tab
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
+
+    //Create Twilight_Builder
     public static final RegistryObject<CreativeModeTab> SBMOD_TAB = CREATIVE_MODE_TABS.register("sbmod_tab", () -> CreativeModeTab.builder()
             .icon(() -> new ItemStack(HEAD_K2536_BLOCK_ITEM.get()))
             .title(Component.translatable("MODID"))
@@ -79,6 +65,22 @@ public class Main {
                 // 添加更多物品
             })
             .build());
+    // Directly reference a slf4j logger
+    private static final Logger LOGGER = LogUtils.getLogger();
+    public Main() {
+        var bus = FMLJavaModLoadingContext.get().getModEventBus();
+        BLOCKS.register(bus);
+        ITEMS.register(bus);
+        ENTITIES.register(bus);
+        CREATIVE_MODE_TABS.register(bus);
+
+        ModSound.register(bus);
+        bus.addListener(this::addCreateTab);
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+       
+
+    }
+
     public void addCreateTab(BuildCreativeModeTabContentsEvent event) {
         if (event.getTab() == SBMOD_TAB.get()) {
             event.accept(HEAD_K2536_BLOCK_ITEM.get());
@@ -89,12 +91,10 @@ public class Main {
             // 添加更多物品
         }
     }
+
     private void setup(final FMLCommonSetupEvent event) {
         // ... 其他设置 ...
     }
 
-    @SubscribeEvent
-    public static void onAttributeCreate(EntityAttributeCreationEvent event) {
-        ModEntity.registerEntityAttributes(event);
-    }
+
 }
