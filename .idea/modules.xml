@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/SBCraft-mod.iml" filepath="$PROJECT_DIR$/.idea/SBCraft-mod.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/SBmod.main.iml" filepath="$PROJECT_DIR$/.idea/modules/SBmod.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/SBmod.test.iml" filepath="$PROJECT_DIR$/.idea/modules/SBmod.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.Twilight.SBMod.SBmod.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.Twilight.SBMod.SBmod.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.Twilight.SBMod.SBmod.test.iml" filepath="$PROJECT_DIR$/.idea/modules/com.Twilight.SBMod.SBmod.test.iml" />
     </modules>
   </component>
 </project>

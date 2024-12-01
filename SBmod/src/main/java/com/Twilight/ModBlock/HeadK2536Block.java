@@ -51,7 +51,6 @@ public class HeadK2536Block extends Block {
                 Component HaoChi = Component.literal("<K2536>:哇塞，皓齿皓齿我吃吃吃").setStyle(yellowStyle);
                 player.displayClientMessage(HaoChi, true);
             } else if (stack.getItem() == ModItems.SHIT.get()) {
-                stack.shrink(1);
                 Component rainbowComponent = Component.empty();
                 ItemStack shit = new ItemStack(ModItems.SHIT.get(), 1);
                 String text = "<K2536>:我爱吃屎芜钨吴武雾芜芜芜芜芜芜芜芜芜芜唔啊护i哦撒旦藕片aiusLLLLLLLLL";
@@ -74,9 +73,11 @@ public class HeadK2536Block extends Block {
             }
         }else{//服务端逻辑
             if (stack.getItem() == Items.IRON_INGOT) {
+                stack.shrink(1);
                 ItemStack diamond = new ItemStack(Items.DIAMOND);
                 player.addItem(diamond);
             }else if (stack.getItem().isEdible() && stack.getItem() != ModItems.SHIT.get()){
+                stack.shrink(1);
                 level.playSound(null,pos, SoundEvents.GENERIC_EAT, SoundSource.BLOCKS,1.0F,1.0F);//播放吃东西音效
                 ItemStack shit = new ItemStack(ModItems.SHIT.get(),1);
                 player.addItem(shit);
@@ -84,7 +85,9 @@ public class HeadK2536Block extends Block {
                 for (int i = 0; i < 10; i++) {
                     level.playSound(null,pos, SoundEvents.GENERIC_EAT, SoundSource.BLOCKS,1.0F,1.0F);
                 }
+                stack.shrink(1);
                 //在方块上生成物品喷泉
+
                 ItemStack itemStack = new ItemStack(ModItems.SHIT.get());
                 createItemFountain(level, pos, itemStack ,0.5,1.0);
             }
