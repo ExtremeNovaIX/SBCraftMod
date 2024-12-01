@@ -20,6 +20,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
+import com.Twilight.ModSound.ModSound;
 
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -57,9 +58,9 @@ public class Main {
         ITEMS.register(bus);
         ENTITIES.register(bus);
         CREATIVE_MODE_TABS.register(bus);
-        bus.addListener(this::addCreateTab);
         ModEntity.ENTITIES.register(bus);
-
+        ModSound.register(bus);
+        bus.addListener(this::addCreateTab);
     }
     //Create Creative Mode Tab
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
@@ -71,6 +72,7 @@ public class Main {
                 output.accept(HEAD_EXTREMENOVAIX_BLOCK_ITEM.get());
                 output.accept(HEAD_TWILIGHTBUILDER_BLOCK_ITEM.get());
                 output.accept(SHIT.get());
+
                 // 添加更多物品
             })
             .build());
@@ -79,6 +81,7 @@ public class Main {
             event.accept(HEAD_K2536_BLOCK_ITEM.get());
             event.accept(HEAD_EXTREMENOVAIX_BLOCK_ITEM.get());
             event.accept(HEAD_TWILIGHTBUILDER_BLOCK_ITEM.get());
+            ModSound.getMusicDiscs().forEach(disc -> event.accept(disc.getItem().get()));
             event.accept(SHIT.get());
             // 添加更多物品
         }
