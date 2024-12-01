@@ -77,7 +77,7 @@ public class Main {
         ModSound.register(bus);
         bus.addListener(this::addCreateTab);
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-       
+
 
     }
 
