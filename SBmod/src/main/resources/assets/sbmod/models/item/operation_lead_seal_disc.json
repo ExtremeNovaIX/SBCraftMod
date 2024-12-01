@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "sbmod:item/operation_lead_seal"
+    "layer0": "sbmod:item/operation_lead_seal_disc"
   }
 }

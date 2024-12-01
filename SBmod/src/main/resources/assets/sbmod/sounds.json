@@ -1,7 +1,26 @@
 {
-	"operation_lead_seal": {
+	"operation_lead_seal_disc": {
 		"sounds": [
-			"sbmod:operation_lead_seal"
+			{
+				"name": "operation_lead_seal_disc",
+				"stream": true
+			}
+		]
+	},
+	"ambiguous_morality_disc": {
+		"sounds": [
+			{
+				"name": "ambiguous_morality_disc",
+				"stream": true
+			}
+		]
+	},
+	"misty_memory_disc": {
+		"sounds": [
+			{
+				"name": "misty_memory_disc",
+				"stream": true
+			}
 		]
 	}
 }
