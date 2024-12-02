@@ -1,8 +1,6 @@
 package com.Twilight.SBMod;
 
 import com.Twilight.ModBlock.HeadK2536Block;
-import com.Twilight.ModItems.Shit;
-import com.Twilight.ModSounds.ModSounds;
 import com.Twilight.ModSounds.ModSounds;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
@@ -21,18 +19,17 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
-import com.Twilight.ModItems.ModItems;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod(Main.MODID)
+@Mod("sbmod")
 public class Main {
     // Define mod id in a common place for everything to reference
-    public static final String MODID = "sbmod";
+    public static final String MOD_ID = "sbmod";
     // Create a Deferred Register to hold Blocks which will all be registered under the "examplemod" namespace
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
-    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MODID);
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MOD_ID);
+    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MOD_ID);
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
     public static final RegistryObject<Block> HEAD_K2536_BLOCK = BLOCKS.register("head_k2536_block",
             () -> new HeadK2536Block(BlockBehaviour.Properties.of()
                     .strength(3.0f)
@@ -80,7 +77,7 @@ public class Main {
     public static final RegistryObject<CreativeModeTab> SBMOD_TAB = CREATIVE_MODE_TABS.register("sbmod_tab",
             () -> CreativeModeTab.builder()
             .icon(() -> new ItemStack(HEAD_K2536_BLOCK_ITEM.get()))
-            .title(Component.translatable("MODID"))
+            .title(Component.translatable("MOD_ID"))
             .displayItems((parameters, output) -> {
                 output.accept(HEAD_K2536_BLOCK_ITEM.get());
                 output.accept(HEAD_EXTREMENOVAIX_BLOCK_ITEM.get());

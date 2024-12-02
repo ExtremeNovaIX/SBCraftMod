@@ -1,18 +1,13 @@
 package com.Twilight.ModItems;
-import com.Twilight.ModSounds.ModSounds;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.RecordItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import com.Twilight.SBMod.Main;
-import net.minecraft.tags.ItemTags;
 
-import static com.Twilight.SBMod.Main.MODID;
+import static com.Twilight.SBMod.Main.MOD_ID;
 
 public class ModItems {
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
 
     // 注册Shit物品
     public static final RegistryObject<Item> SHIT = ITEMS.register("shit",
