@@ -2,7 +2,6 @@ package com.Twilight.SBMod;
 
 import com.Twilight.ModBlock.HeadK2536Block;
 import com.Twilight.ModSounds.ModSounds;
-import com.Twilight.Util.KeyBinding;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -20,6 +19,9 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
+
+import static com.Twilight.Client.KeyBindings.INSTANCE;
+
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("sbmod")
@@ -98,6 +100,8 @@ public class Main {
         ITEMS.register(bus);
         ENTITIES.register(bus);
         CREATIVE_MODE_TABS.register(bus);
+        bus.addListener(this::setup);
+        bus.register(INSTANCE.SHIT_KEY);
         ModSounds.register(bus);
         bus.addListener(this::addCreateTab);
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();

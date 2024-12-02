@@ -91,9 +91,9 @@ public class HeadK2536Block extends Block {
         return InteractionResult.PASS;
     }
 
-
-    private void createItemFountain(Level level, BlockPos pos, ItemStack item, double radius, double height) {
+public void createItemFountain(Level level, BlockPos pos, ItemStack item, double radius, double height) {
         Random random = new Random();
+
         int count = random.nextInt(63) + 1;
         // 使喷泉在方块正上方生成
         Vec3 fountainPos = new Vec3(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
