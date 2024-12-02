@@ -2,6 +2,7 @@ package com.Twilight.SBMod;
 
 import com.Twilight.ModBlock.HeadK2536Block;
 import com.Twilight.ModSounds.ModSounds;
+import com.Twilight.Util.KeyBinding;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;

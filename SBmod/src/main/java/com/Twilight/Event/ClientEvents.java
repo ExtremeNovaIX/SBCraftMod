@@ -12,7 +12,7 @@ import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-public class ClientEnents {
+public class ClientEvents {
     @Mod.EventBusSubscriber(modid = Main.MOD_ID, value = Dist.CLIENT)
     public static class ClientForgeEvent {
         @SubscribeEvent
