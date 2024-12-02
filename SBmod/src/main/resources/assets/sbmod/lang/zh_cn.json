@@ -3,5 +3,11 @@
   "block.sbmod.head_extremenovaix_block": "ExtremeNovaIX",
   "block.sbmod.head_twilightbuilder_block": "Twilight_Builder",
   "item.sbmod.shit": "史",
-  "MODID": "啥比工艺"
+  "MODID": "啥比工艺",
+  "item.sbmod.operation_lead_seal_disc": "Daisies--Alestor",
+  "item.sbmod.operation_lead_seal_disc.desc": "Daisies",
+  "item.sbmod.misty_memory_disc": "So Long For Adele--Misty Memory",
+  "item.sbmod.misty_memory_disc.desc": "Misty Memory",
+  "item.sbmod.ambiguous_morality_disc": "揭幕者们--Ambiguous Morality",
+  "item.sbmod.ambiguous_morality_disc.desc": "Ambiguous Morality"
 }
