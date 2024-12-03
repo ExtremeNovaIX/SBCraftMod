@@ -83,7 +83,6 @@ public class HeadK2536Block extends Block {
                 }
                 stack.shrink(1);
                 //在方块上生成物品喷泉
-
                 ItemStack itemStack = new ItemStack(ModItems.SHIT.get());
                 createItemFountain(level, pos, itemStack ,0.5,1.0);
             }

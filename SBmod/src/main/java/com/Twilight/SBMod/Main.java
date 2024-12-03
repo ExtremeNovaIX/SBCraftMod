@@ -1,8 +1,13 @@
 package com.Twilight.SBMod;
 
 import com.Twilight.ModBlock.HeadK2536Block;
+import com.Twilight.ModEntities.ModEntities;
+import com.Twilight.ModEntities.cilent.ModModelLayers;
+import com.Twilight.ModEntities.cilent.Twilight_BuilderModel;
 import com.Twilight.ModSounds.ModSounds;
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
@@ -10,16 +15,22 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
-
+import com.Twilight.ModEntities.cilent.Twilight_BuilderRenderer;
 import static com.Twilight.Client.KeyBindings.INSTANCE;
 
 
@@ -76,11 +87,22 @@ public class Main {
                     4840
             )
     );
+    @SubscribeEvent
+    public void onServerStarting(ServerStartingEvent event) {
+
+    }
+    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD,value = Dist.CLIENT)
+    public static class ClientEvents {
+        @SubscribeEvent
+        public static void onClientSetup(FMLClientSetupEvent event) {
+            EntityRenderers.register(ModEntities.TWILIGHT_BUILDER.get(), Twilight_BuilderRenderer::new);
+        }
+    }
      //Create Creative Mode Tab
     public static final RegistryObject<CreativeModeTab> SBMOD_TAB = CREATIVE_MODE_TABS.register("sbmod_tab",
             () -> CreativeModeTab.builder()
             .icon(() -> new ItemStack(HEAD_K2536_BLOCK_ITEM.get()))
-            .title(Component.translatable("MOD_ID"))
+            .title(Component.translatable(MOD_ID))
             .displayItems((parameters, output) -> {
                 output.accept(HEAD_K2536_BLOCK_ITEM.get());
                 output.accept(HEAD_EXTREMENOVAIX_BLOCK_ITEM.get());
@@ -98,15 +120,12 @@ public class Main {
         var bus = FMLJavaModLoadingContext.get().getModEventBus();
         BLOCKS.register(bus);
         ITEMS.register(bus);
-        ENTITIES.register(bus);
+        ModEntities.ENTITIY_TYPES.register(bus);
         CREATIVE_MODE_TABS.register(bus);
         bus.addListener(this::setup);
         bus.register(INSTANCE.SHIT_KEY);
         ModSounds.register(bus);
         bus.addListener(this::addCreateTab);
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
-
     }
 
     public void addCreateTab(BuildCreativeModeTabContentsEvent event) {
