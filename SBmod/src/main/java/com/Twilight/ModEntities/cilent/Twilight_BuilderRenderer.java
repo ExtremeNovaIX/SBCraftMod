@@ -15,7 +15,7 @@ public class Twilight_BuilderRenderer extends MobRenderer<Twilight_Builder, Twil
     }
     @Override
     public ResourceLocation getTextureLocation(Twilight_Builder p_114482_) {
-        return new ResourceLocation(Main.MOD_ID, "textures/entity/twilight_builder.png");
+        return new ResourceLocation(Main.MOD_ID, "textures/entities/twilight_builder.png");
 
     }
 
