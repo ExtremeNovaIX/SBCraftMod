@@ -2,11 +2,9 @@ package com.Twilight.SBMod;
 
 import com.Twilight.ModBlock.HeadK2536Block;
 import com.Twilight.ModEntities.ModEntities;
-import com.Twilight.ModEntities.cilent.ModModelLayers;
-import com.Twilight.ModEntities.cilent.Twilight_BuilderModel;
+import com.Twilight.ModEntities.client.Explosion_SheepRenderer;
 import com.Twilight.ModSounds.ModSounds;
 import com.mojang.logging.LogUtils;
-import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -16,11 +14,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -30,7 +25,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
-import com.Twilight.ModEntities.cilent.Twilight_BuilderRenderer;
+import com.Twilight.ModEntities.client.Twilight_BuilderRenderer;
 import static com.Twilight.Client.KeyBindings.INSTANCE;
 
 
@@ -96,6 +91,7 @@ public class Main {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntities.TWILIGHT_BUILDER.get(), Twilight_BuilderRenderer::new);
+            EntityRenderers.register(ModEntities.EXPLOSION_SHEEP.get(), Explosion_SheepRenderer::new);
         }
     }
      //Create Creative Mode Tab

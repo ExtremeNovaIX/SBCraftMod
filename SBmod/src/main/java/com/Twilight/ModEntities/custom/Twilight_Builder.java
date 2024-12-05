@@ -25,11 +25,7 @@ public class Twilight_Builder extends Animal {
         this.goalSelector.addGoal(4,new RandomStrollGoal(this,1.1D));
         this.goalSelector.addGoal(5,new LookAtPlayerGoal(this, Player.class,5.0f));
         this.goalSelector.addGoal(6,new RandomLookAroundGoal(this));
-
     }
-
-
-
 
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createMobAttributes()
