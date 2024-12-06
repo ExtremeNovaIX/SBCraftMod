@@ -19,6 +19,9 @@ public class ModEntities {
     public static final RegistryObject<EntityType<Explosion_Sheep>> EXPLOSION_SHEEP =
             ENTITIY_TYPES.register("explosion_sheep",() -> EntityType.Builder.of(Explosion_Sheep::new, MobCategory.CREATURE)
                     .sized(1.7f,0.9f).build("Explosion_Sheep"));
+    public static final RegistryObject<EntityType<Explosion_Sheep>> EXPLOSION_SHEEP_WOOL =
+            ENTITIY_TYPES.register("explosion_sheep_wool",() -> EntityType.Builder.of(Explosion_Sheep::new, MobCategory.CREATURE)
+                    .sized(1.7f,0.9f).build("Explosion_Sheep_Wool"));
 
 
 

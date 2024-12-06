@@ -9,4 +9,6 @@ public class ModModelLayers {
             new ResourceLocation(Main.MOD_ID, "twilight_builder"), "main");
     public static final ModelLayerLocation EXPLOSION_SHEEP_LAYER = new ModelLayerLocation(
             new ResourceLocation(Main.MOD_ID, "explosion_sheep"), "main");
+    public static final ModelLayerLocation EXPLOSION_SHEEP_WOOL_LAYER = new ModelLayerLocation(
+            new ResourceLocation(Main.MOD_ID, "explosion_sheep_wool"), "main");
 }

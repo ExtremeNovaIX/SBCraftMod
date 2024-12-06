@@ -1,5 +1,6 @@
 package com.Twilight.Event;
 import com.Twilight.ModEntities.client.Explosion_SheepModel;
+import com.Twilight.ModEntities.client.Explosion_Sheep_WoolModel;
 import com.Twilight.ModEntities.client.ModModelLayers;
 import com.Twilight.ModEntities.client.Twilight_BuilderModel;
 import com.Twilight.SBMod.Main;
@@ -19,6 +20,7 @@ public class ClientEvents {
     @SubscribeEvent
     public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event){
         event.registerLayerDefinition(ModModelLayers.TWILIGHT_BUILDER_LAYER, Twilight_BuilderModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.EXPLOSION_SHEEP_WOOL_LAYER, Explosion_Sheep_WoolModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.EXPLOSION_SHEEP_LAYER, Explosion_SheepModel::createBodyLayer);
     }
 }
