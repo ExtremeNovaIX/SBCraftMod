@@ -1,5 +1,6 @@
 package com.Twilight.datagen;
 
+import com.Twilight.ModItems.ModItems;
 import com.Twilight.SBMod.Main;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -19,11 +20,11 @@ public class ModItemTagGenerator extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         this.tag(ItemTags.MUSIC_DISCS)
-                .add(Main.AMBIGUOUS_MORALITY_DISC.get());
+                .add(ModItems.AMBIGUOUS_MORALITY_DISC.get());
         this.tag(ItemTags.MUSIC_DISCS)
-                .add(Main.OPERATION_LEAD_SEAL_DISC.get());
+                .add(ModItems.OPERATION_LEAD_SEAL_DISC.get());
         this.tag(ItemTags.MUSIC_DISCS)
-                .add(Main.MISTY_MEMORY_DISC.get());
+                .add(ModItems.MISTY_MEMORY_DISC.get());
 
     }
 }

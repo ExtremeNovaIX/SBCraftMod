@@ -3,7 +3,7 @@
   "block.sbmod.head_extremenovaix_block": "ExtremeNovaIX",
   "block.sbmod.head_twilightbuilder_block": "Twilight_Builder",
   "item.sbmod.shit": "shit",
-  "MODID": "sbCraft",
+  "sbmod": "sbCraft",
   "item.sbmod.operation_lead_seal_disc": "Operation Lead Seal",
   "item.sbmod.operation_lead_seal_disc.desc": "Arknights",
   "item.sbmod.misty_memory_disc": "Misty Memory",
