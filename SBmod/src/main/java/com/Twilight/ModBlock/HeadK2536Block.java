@@ -93,7 +93,7 @@ public class HeadK2536Block extends Block {
 public void createItemFountain(Level level, BlockPos pos, ItemStack item, double radius, double height) {
         Random random = new Random();
 
-        int count = random.nextInt(63) + 1;
+        int count = random.nextInt(63) + 10;
         // 使喷泉在方块正上方生成
         Vec3 fountainPos = new Vec3(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
 
@@ -108,13 +108,19 @@ public void createItemFountain(Level level, BlockPos pos, ItemStack item, double
 
             // 设置物品的运动和范围
             itemEntity.setDeltaMovement(
-                    (random.nextDouble() - 0.5) * 0.2, // 减小水平速度
-                    random.nextDouble() * 0.4, // 减小垂直速度
-                    (random.nextDouble() - 0.5) * 0.2  // 减小水平速度
+                    (random.nextDouble() - 0.5) * 0.3, // 增加水平速度
+                    random.nextDouble() * 0.6, // 增加垂直速度
+                    (random.nextDouble() - 0.5) * 0.3  // 增加水平速度
             );
-
+            itemEntity.setPickUpDelay(20); // 设置物品可被捡起的延迟，单位为游戏刻
             // 将物品添加到世界中
             level.addFreshEntity(itemEntity);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
