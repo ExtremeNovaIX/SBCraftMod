@@ -3,10 +3,12 @@ package com.Twilight.SBMod;
 import com.Twilight.ModEntities.ModEntities;
 import com.Twilight.ModEntities.client.Explosion_SheepRenderer;
 import com.Twilight.ModSounds.ModSounds;
+import com.Twilight.Packet.CustomPacket;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -15,6 +17,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
@@ -28,6 +32,18 @@ import static com.Twilight.ModItems.ModItems.*;
 public class Main {
     public static final String MOD_ID = "sbmod";
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
+    public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(
+            new ResourceLocation(MOD_ID, "main"),
+            () -> "1.0",
+            s -> true,
+            s -> true
+    );
+    public static void init() {
+        // ... 其他初始化代码 ...
+
+        int id = 0;
+        PACKET_HANDLER.registerMessage(id++, CustomPacket.class, CustomPacket::encode, CustomPacket::decode, CustomPacket::handle);
+    }
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
 
@@ -66,6 +82,7 @@ public class Main {
         CREATIVE_MODE_TABS.register(bus);
         ModSounds.register(bus);
         bus.addListener(this::addCreateTab);
+        init();
     }
 
     public void addCreateTab(BuildCreativeModeTabContentsEvent event) {

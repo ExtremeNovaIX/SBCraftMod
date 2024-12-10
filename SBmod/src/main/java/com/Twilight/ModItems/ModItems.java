@@ -18,9 +18,12 @@ import static com.Twilight.SBMod.Main.MOD_ID;
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
 
-    // 注册Shit物品
+
     public static final RegistryObject<Item> SHIT = ITEMS.register("shit",
             () -> new Shit(new Item.Properties()));
+    public static final RegistryObject<Item> EXPLOSION_SHEEP_ITEM = ITEMS.register("explosion_sheep_item",
+            () -> new ExplosionSheepSpawnItem(new Item.Properties()));
+
     public static final RegistryObject<Item> HEAD_K2536_BLOCK_ITEM = ITEMS.register("head_k2536_block",
             () -> new BlockItem(HEAD_K2536_BLOCK.get(), new Item.Properties()));
     public static final RegistryObject<Item> HEAD_EXTREMENOVAIX_BLOCK_ITEM = ITEMS.register("head_extremenovaix_block",
