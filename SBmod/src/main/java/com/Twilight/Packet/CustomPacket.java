@@ -1,13 +1,15 @@
 // FILEPATH: E:/SBCraft-mod/SBmod/src/main/java/com/Twilight/Packet/CustomPacket.java
 package com.Twilight.Packet;
 
+import com.Twilight.ModEntities.custom.Explosion_Sheep;
 import com.Twilight.ModItems.ModItems;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkEvent;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 
 import java.util.function.Supplier;
 
@@ -29,22 +31,50 @@ public class CustomPacket {
     public static void handle(CustomPacket packet, Supplier<NetworkEvent.Context> contextSupplier) {
         NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
-            // 在服务器端处理接收到的消息
             ServerPlayer player = context.getSender();
-            if (player != null && packet.getMessage().equals("ShitKey被按下！")) {
-                // 在服务端生成物品的逻辑
-                double x = player.getX();
-                double y = player.getY() + 2;
-                double z = player.getZ();
-                ItemStack shitStack = new ItemStack(ModItems.SHIT.get(), 1);
-                ItemEntity itemEntity = new ItemEntity(player.level(), x, y, z, shitStack);
-                player.level().addFreshEntity(itemEntity);
+            if (player != null) {
+                if (packet.getMessage().equals("ShitKey被按下！")) {
+                    // 在服务端生成物品的逻辑
+                    double x = player.getX();
+                    double y = player.getY() + 2;
+                    double z = player.getZ();
+                    ItemStack shitStack = new ItemStack(ModItems.SHIT.get(), 1);
+                    ItemEntity itemEntity = new ItemEntity(player.level(), x, y, z, shitStack);
+                    player.level().addFreshEntity(itemEntity);
+                } else if (packet.getMessage().startsWith("ExplosionSheepLanded:")) {
+                    System.out.println("收到ExplosionSheepLanded消息: " + packet.getMessage());
+                    String[] parts = packet.getMessage().split(":");
+                    if (parts.length == 2) {
+                        try {
+                            int entityId = Integer.parseInt(parts[1]);
+                            System.out.println("解析的实体ID: " + entityId);
+                            Entity entity = player.level().getEntity(entityId);
+                            if (entity != null) {
+                                System.out.println("找到实体: " + entity.getClass().getName());
+                                if (entity instanceof Explosion_Sheep) {
+                                    System.out.println("实体是Explosion_Sheep，准备触发爆炸");
+                                    // 触发爆炸
+                                    player.level().explode(entity, entity.getX(), entity.getY(), entity.getZ(), 4.0F, Level.ExplosionInteraction.TNT);
+                                    entity.remove(Entity.RemovalReason.KILLED);
+                                    System.out.println("爆炸已触发，实体已移除");
+                                } else {
+                                    System.out.println("实体不是Explosion_Sheep");
+                                }
+                            } else {
+                                System.out.println("未找到对应ID的实体");
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("实体ID解析错误: " + parts[1]);
+                        }
+                    } else {
+                        System.out.println("消息格式不正确: " + packet.getMessage());
+                    }
+                }
             }
         });
         context.setPacketHandled(true);
     }
 
-    // 获取消息内容的方法
     public String getMessage() {
         return message;
     }

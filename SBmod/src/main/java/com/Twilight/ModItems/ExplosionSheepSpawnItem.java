@@ -23,7 +23,7 @@ public class ExplosionSheepSpawnItem extends Item {
             sheep.setPos(player.getX(), player.getY() + 1.0, player.getZ());
             sheep.setYRot(player.getYRot());
             sheep.setXRot(player.getXRot());
-            sheep.setDeltaMovement(player.getLookAngle().multiply(1.5, 1.5, 1.5));
+            sheep.setDeltaMovement(player.getLookAngle().multiply(3, 3, 3));
             level.addFreshEntity(sheep);
 
             if (!player.getAbilities().instabuild) {
