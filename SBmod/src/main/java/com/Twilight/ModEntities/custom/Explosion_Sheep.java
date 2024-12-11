@@ -42,20 +42,16 @@ public class Explosion_Sheep extends Mob {
         super.tick();
 
         // 检查羊是否在空中
-        boolean isInAir = !this.onGround();
-
-        // 如果羊之前在空中，现在在地面上，那么它刚刚落地
-        if (wasInAir && !isInAir) {
+        if (this.onGround()) {
             // 羊落地，生成爆炸
             this.explode();
         }
-        wasInAir = isInAir;
     }
 
     private void explode() {
         if (!this.level().isClientSide) {
-            // 发包到服务器
-            Main.PACKET_HANDLER.sendToServer(new CustomPacket("ExplosionSheepLanded:" + this.getId()));
+            this.level().explode(this, this.getX(), this.getY(), this.getZ(),3F, Level.ExplosionInteraction.TNT);
+            this.remove(Entity.RemovalReason.KILLED);
         }
     }
 }

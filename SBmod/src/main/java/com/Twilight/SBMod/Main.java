@@ -69,6 +69,7 @@ public class Main {
                 output.accept(OPERATION_LEAD_SEAL_DISC.get());
                 output.accept(AMBIGUOUS_MORALITY_DISC.get());
                 output.accept(MISTY_MEMORY_DISC.get());
+                output.accept(EXPLOSION_SHEEP_ITEM.get());
                 // 添加更多物品
             })
             .build());
@@ -81,22 +82,7 @@ public class Main {
         ModEntities.ENTITIY_TYPES.register(bus);
         CREATIVE_MODE_TABS.register(bus);
         ModSounds.register(bus);
-        bus.addListener(this::addCreateTab);
         init();
     }
-
-    public void addCreateTab(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTab() == SBMOD_TAB.get()) {
-            event.accept(HEAD_K2536_BLOCK_ITEM.get());
-            event.accept(HEAD_EXTREMENOVAIX_BLOCK_ITEM.get());
-            event.accept(HEAD_TWILIGHTBUILDER_BLOCK_ITEM.get());
-            event.accept(SHIT.get());
-            event.accept(OPERATION_LEAD_SEAL_DISC.get());
-            event.accept(AMBIGUOUS_MORALITY_DISC.get());
-            event.accept(MISTY_MEMORY_DISC.get());
-            // 添加更多物品
-        }
-    }
-
 
 }
