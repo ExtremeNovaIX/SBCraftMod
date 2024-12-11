@@ -10,6 +10,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkEvent;
+import java.util.Random;
 
 import java.util.function.Supplier;
 
@@ -38,9 +39,22 @@ public class CustomPacket {
                     double x = player.getX();
                     double y = player.getY() + 2;
                     double z = player.getZ();
+                    Random random = new Random();
                     ItemStack shitStack = new ItemStack(ModItems.SHIT.get(), 1);
                     ItemEntity itemEntity = new ItemEntity(player.level(), x, y, z, shitStack);
+                    itemEntity.setDeltaMovement(
+                            (random.nextDouble() - 0.5) * 0.3, // 增加水平速度
+                            random.nextDouble() * 0.6, // 增加垂直速度
+                            (random.nextDouble() - 0.5) * 0.3  // 增加水平速度
+                    );
+                    itemEntity.setPickUpDelay(20); // 设置物品可被捡起的延迟，单位为游戏刻
+                    // 将物品添加到世界中
                     player.level().addFreshEntity(itemEntity);
+                    try {
+                        Thread.sleep(40);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
