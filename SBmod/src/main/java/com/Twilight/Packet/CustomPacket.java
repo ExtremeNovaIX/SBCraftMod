@@ -36,6 +36,7 @@ public class CustomPacket {
             if (player != null) {
                 if (packet.getMessage().equals("ShitKey被按下！")) {
                     // 在服务端生成物品的逻辑
+                    for (int i = 0; i < 11; i++) {
                     double x = player.getX();
                     double y = player.getY() + 2;
                     double z = player.getZ();
@@ -47,14 +48,13 @@ public class CustomPacket {
                             random.nextDouble() * 0.6, // 增加垂直速度
                             (random.nextDouble() - 0.5) * 0.3  // 增加水平速度
                     );
-                    itemEntity.setPickUpDelay(20); // 设置物品可被捡起的延迟，单位为游戏刻
-                    // 将物品添加到世界中
-                    player.level().addFreshEntity(itemEntity);
-                    try {
-                        Thread.sleep(40);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        itemEntity.setPickUpDelay(20); // 设置物品可被捡起的延迟，单位为游戏刻
+                        // 将物品添加到世界中
+                        player.level().addFreshEntity(itemEntity);
+
                     }
+
+                    
                 }
             }
         });
