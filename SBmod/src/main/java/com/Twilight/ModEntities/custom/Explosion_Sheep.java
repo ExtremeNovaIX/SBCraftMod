@@ -20,10 +20,8 @@ public class Explosion_Sheep extends Mob {
         super(entityType, level);
     }
 
-    private boolean wasInAir = false;
-
     public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createMobAttributes()
+        return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 10.0D);
     }
 

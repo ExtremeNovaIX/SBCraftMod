@@ -13,6 +13,7 @@ import net.minecraft.world.item.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -32,6 +33,9 @@ import static com.Twilight.ModItems.ModItems.*;
 public class Main {
     public static final String MOD_ID = "sbmod";
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
+    private void registerCommonEvents(IEventBus modEventBus) {
+        ModEntities.ENTITIY_TYPES.register(modEventBus);
+    }
     public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(
             new ResourceLocation(MOD_ID, "main"),
             () -> "1.0",
@@ -76,12 +80,12 @@ public class Main {
 
     private static final Logger LOGGER = LogUtils.getLogger();
     public Main() {
-        var bus = FMLJavaModLoadingContext.get().getModEventBus();
-        BLOCKS.register(bus);
-        ITEMS.register(bus);
-        ModEntities.ENTITIY_TYPES.register(bus);
-        CREATIVE_MODE_TABS.register(bus);
-        ModSounds.register(bus);
+        var modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        registerCommonEvents(modEventBus);
+        BLOCKS.register(modEventBus);
+        ITEMS.register(modEventBus);
+        CREATIVE_MODE_TABS.register(modEventBus);
+        ModSounds.register(modEventBus);
         init();
     }
 

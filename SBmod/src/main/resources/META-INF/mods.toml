@@ -1,70 +1,64 @@
-# This is an example mods.toml file. It contains the data relating to the loading mods.
-# There are several mandatory fields (#mandatory), and many more that are optional (#optional).
-# The overall format is standard TOML format, v0.5.0.
-# Note that there are a couple of TOML lists in this file.
-# Find more information on toml format here:  https://github.com/toml-lang/toml
-# The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
+# 这是 mods.toml 文件。它包含了有关加载 mods 的数据。
+# 有几个强制性字段 (#mandatory)，还有许多可选字段 (#optional)。
+# 整体格式遵循标准的 TOML 格式，v0.5.0。
+# 注意这个文件中有几个 TOML 列表。
+# 在这里查找有关 toml 格式的更多信息：  https://github.com/toml-lang/toml
+# mod 加载器类型，对于常规的 FML @Mod mods 应该是 javafml
 modLoader="javafml" #mandatory
-# A version range to match for said mod loader - for regular FML @Mod it will be the forge version
-loaderVersion="${loader_version_range}" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
-# The license for you mod. This is mandatory metadata and allows for easier comprehension of your redistributive properties.
-# Review your options at https://choosealicense.com/. All rights reserved is the default copyright stance, and is thus the default here.
+# mod 加载器的版本范围 - 对于常规的 FML @Mod，这通常是 Forge 版本
+loaderVersion="${loader_version_range}" #mandatory 这通常由 Forge 在每个 Minecraft 版本中更新。请参阅我们的下载页面以获取版本列表。
+# mod 的许可证。这是强制性的元数据，允许更容易理解您的再分发属性。
+# 在 https://choosealicense.com/ 查看您的选项。保留所有权利是默认的版权立场，因此也是这里的默认选项。
 license="${mod_license}"
-# A URL to refer people to when problems occur with this mod
+# 当这个 mod 出现问题时，人们可以参考的 URL
 #issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
-# A list of mods - how many allowed here is determined by the individual mod loader
+# mod 列表 - 这里允许多少个由各个 mod 加载器决定
 [[mods]] #mandatory
-# The modid of the mod
+# mod 的 ID
 modId="sbmod" #mandatory
-# The version number of the mod
+# mod 的版本号
 version="1.0" #mandatory
-# A display name for the mod
+# mod 的显示名称
 displayName="SBMod" #mandatory
-# A URL to query for updates for this mod. See the JSON update specification https://docs.minecraftforge.net/en/latest/misc/updatechecker/
+# mod 更新的 JSON URL。参见 JSON 更新规范 https://docs.minecraftforge.net/en/latest/misc/updatechecker/
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional
-# A URL for the "homepage" for this mod, displayed in the mod UI
+# mod 的"主页" URL，显示在 mod UI 中
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
-# A file name (in the root of the mod JAR) containing a logo for display
+# 用于显示的 logo 文件名（在 mod JAR 的根目录中）
 #logoFile="examplemod.png" #optional
-# A text field displayed in the mod UI
+# 在 mod UI 中显示的文本字段
 #credits="" #optional
-# A text field displayed in the mod UI
+# 在 mod UI 中显示的作者文本字段
 authors="${mod_authors}" #optional
-# Display Test controls the display for your mod in the server connection screen
-# MATCH_VERSION means that your mod will cause a red X if the versions on client and server differ. This is the default behaviour and should be what you choose if you have server and client elements to your mod.
-# IGNORE_SERVER_VERSION means that your mod will not cause a red X if it's present on the server but not on the client. This is what you should use if you're a server only mod.
-# IGNORE_ALL_VERSION means that your mod will not cause a red X if it's present on the client or the server. This is a special case and should only be used if your mod has no server component.
-# NONE means that no display test is set on your mod. You need to do this yourself, see IExtensionPoint.DisplayTest for more information. You can define any scheme you wish with this value.
-# IMPORTANT NOTE: this is NOT an instruction as to which environments (CLIENT or DEDICATED SERVER) your mod loads on. Your mod should load (and maybe do nothing!) whereever it finds itself.
-#displayTest="MATCH_VERSION" # MATCH_VERSION is the default if nothing is specified (#optional)
+# 显示测试控制 mod 在服务器连接屏幕中的显示
+# MATCH_VERSION 意味着如果客户端和服务器版本不同，您的 mod 将导致红 X。这是默认行为，如果您的 mod 有服务器和客户端元素，您应该选择这个。
+# IGNORE_SERVER_VERSION 意味着如果它存在于服务器上但不在客户端上，您的 mod 不会导致红 X。如果您是仅服务器 mod，则应使用此选项。
+# IGNORE_ALL_VERSION 意味着无论它是否存在于客户端或服务器上，您的 mod 都不会导致红 X。这是一种特殊情况，只有当您的 mod 没有服务器组件时才应使用。
+# NONE 意味着您的 mod 没有设置显示测试。您需要自己做这个，请参阅 IExtensionPoint.DisplayTest 以获取更多信息。您可以用这个值定义任何您希望的方案。
+# 重要提示：这不是指示您的 mod 在哪些环境（客户端或专用服务器）加载的说明。您的 mod 应该在它发现自己的任何地方加载（可能什么都不做！）。
+#displayTest="MATCH_VERSION" # MATCH_VERSION 是默认值，如果没有指定 (#optional)
 
-# The description text for the mod (multi line!) (#mandatory)
+# mod 的描述文本（多行！）(#mandatory)
 description='''${mod_description}'''
-# A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
+# 依赖关系 - 使用 . 表示特定 modid 的依赖关系。依赖关系是可选的。
 [[dependencies.sbmod]] #optional
-    # the modid of the dependency
-    modId="forge" #mandatory
-    # Does this dependency have to exist - if not, ordering below must be specified
-    mandatory=true #mandatory
-    # The version range of the dependency
-    versionRange="${forge_version_range}" #mandatory
-    # An ordering relationship for the dependency - BEFORE or AFTER required if the dependency is not mandatory
-    # BEFORE - This mod is loaded BEFORE the dependency
-    # AFTER - This mod is loaded AFTER the dependency
-    ordering="NONE"
-    # Side this dependency is applied on - BOTH, CLIENT, or SERVER
-    side="BOTH"
-# Here's another dependency
+# 依赖的 modid
+modId="forge" #mandatory
+# 这个依赖是否必须存在 - 如果不是，则必须指定下面的顺序
+mandatory=true #mandatory
+# 依赖的版本范围
+versionRange="${forge_version_range}" #mandatory
+# 依赖的顺序关系 - BEFORE 或 AFTER 在依赖不是强制性的情况下是必需的
+# BEFORE - 这个 mod 在依赖之前加载
+# AFTER - 这个 mod 在依赖之后加载
+ordering="NONE"
+# 应用这个依赖的端 - BOTH, CLIENT 或 SERVER
+side="BOTH"
+# 这里是另一个依赖
 [[dependencies.sbmod]]
-    modId="minecraft"
-    mandatory=true
-    # This version range declares a minimum of the current minecraft version up to but not including the next major version
-    versionRange="${minecraft_version_range}"
-    ordering="NONE"
-    side="BOTH"
-
-# Features are specific properties of the game environment, that you may want to declare you require. This example declares
-# that your mod requires GL version 3.2 or higher. Other features will be added. They are side aware so declaring this won't
-# stop your mod loading on the server for example.
-#[features.${mod_id}]
-#openGLVersion="[3.2,)"
+modId="minecraft"
+mandatory=true
+# 这个版本范围声明了当前 minecraft 版本的最小值，直到但不包括下一个主要版本
+versionRange="${minecraft_version_range}"
+ordering="NONE"
+side="BOTH"
