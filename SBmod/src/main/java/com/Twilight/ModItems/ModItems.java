@@ -38,6 +38,8 @@ public class ModItems {
                     2760
             )
     );
+    public static final RegistryObject<Item> THUNDER_STAFF = ITEMS.register("thunder_staff",
+            () -> new ThunderStaff(new Item.Properties()));
 
     public static final RegistryObject<Item> AMBIGUOUS_MORALITY_DISC = ITEMS.register("ambiguous_morality_disc",
             () -> new RecordItem(
