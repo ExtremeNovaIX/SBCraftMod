@@ -1,7 +1,7 @@
 package com.Twilight.ModItems;
 
 import com.Twilight.ModEntities.ModEntities;
-import com.Twilight.ModEntities.custom.Explosion_Sheep;
+import com.Twilight.ModEntities.custom.Explosion_Sheep_Red;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -13,8 +13,8 @@ import net.minecraft.world.level.Level;
 
 import java.util.Random;
 
-public class ExplosionSheepSpawnItem extends Item {
-    public ExplosionSheepSpawnItem(Properties properties) {
+public class Explosion_Sheep_RedItem extends Item {
+    public Explosion_Sheep_RedItem(Properties properties) {
         super(properties);
     }
 
@@ -23,11 +23,11 @@ public class ExplosionSheepSpawnItem extends Item {
         ItemStack itemStack = player.getItemInHand(hand);
 
         if (!level.isClientSide()) {
-            Explosion_Sheep sheep = new Explosion_Sheep(ModEntities.EXPLOSION_SHEEP.get(), level);
-            sheep.setPos(player.getX(), player.getY() + 1.0, player.getZ());
+            Explosion_Sheep_Red sheep = new Explosion_Sheep_Red(ModEntities.EXPLOSION_SHEEP.get(), level);
+            sheep.setPos(player.getX() + 0.5, player.getY() + 1.0, player.getZ() + 0.5);
             sheep.setYRot(player.getYRot());
             sheep.setXRot(player.getXRot());
-            sheep.setDeltaMovement(player.getLookAngle().multiply(3, 3, 3));
+            sheep.setDeltaMovement(player.getLookAngle().multiply(4, 4, 4));
             level.addFreshEntity(sheep);
             playFireworkLaunchSound(level, player);
             if (!player.getAbilities().instabuild) {

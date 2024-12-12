@@ -1,14 +1,11 @@
 // FILEPATH: E:/SBCraft-mod/SBmod/src/main/java/com/Twilight/Packet/CustomPacket.java
 package com.Twilight.Packet;
 
-import com.Twilight.ModEntities.custom.Explosion_Sheep;
 import com.Twilight.ModItems.ModItems;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkEvent;
 import java.util.Random;
 

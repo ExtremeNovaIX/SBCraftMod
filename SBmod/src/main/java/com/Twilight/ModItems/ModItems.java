@@ -1,13 +1,9 @@
 package com.Twilight.ModItems;
-import com.Twilight.ModBlock.HeadK2536Block;
 import com.Twilight.ModSounds.ModSounds;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.RecordItem;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -22,7 +18,7 @@ public class ModItems {
     public static final RegistryObject<Item> SHIT = ITEMS.register("shit",
             () -> new Shit(new Item.Properties()));
     public static final RegistryObject<Item> EXPLOSION_SHEEP_ITEM = ITEMS.register("explosion_sheep_item",
-            () -> new ExplosionSheepSpawnItem(new Item.Properties()));
+            () -> new Explosion_Sheep_RedItem(new Item.Properties()));
 
     public static final RegistryObject<Item> HEAD_K2536_BLOCK_ITEM = ITEMS.register("head_k2536_block",
             () -> new BlockItem(HEAD_K2536_BLOCK.get(), new Item.Properties()));
