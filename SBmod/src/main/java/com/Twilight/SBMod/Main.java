@@ -57,7 +57,7 @@ public class Main {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntities.TWILIGHT_BUILDER.get(), Twilight_BuilderRenderer::new);
-            EntityRenderers.register(ModEntities.EXPLOSION_SHEEP.get(), Explosion_SheepRenderer::new);
+            EntityRenderers.register(ModEntities.EXPLOSION_SHEEP_RED.get(), Explosion_SheepRenderer::new);
         }
     }
      //Create Creative Mode Tab

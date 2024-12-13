@@ -1,6 +1,7 @@
 package com.Twilight.ModItems;
 
 import com.Twilight.ModEntities.ModEntities;
+import com.Twilight.ModEntities.custom.Explosion_SheepOri;
 import com.Twilight.ModEntities.custom.Explosion_Sheep_Red;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -23,7 +24,7 @@ public class Explosion_Sheep_RedItem extends Item {
         ItemStack itemStack = player.getItemInHand(hand);
 
         if (!level.isClientSide()) {
-            Explosion_Sheep_Red sheep = new Explosion_Sheep_Red(ModEntities.EXPLOSION_SHEEP.get(), level);
+            Explosion_Sheep_Red sheep = new Explosion_Sheep_Red(ModEntities.EXPLOSION_SHEEP_RED.get(), level);
             sheep.setPos(player.getX() + 0.5, player.getY() + 1.0, player.getZ() + 0.5);
             sheep.setYRot(player.getYRot());
             sheep.setXRot(player.getXRot());
