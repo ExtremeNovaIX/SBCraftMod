@@ -10,7 +10,8 @@
   "item.sbmod.misty_memory_disc.desc": "Misty Memory",
   "item.sbmod.ambiguous_morality_disc": "揭幕者们--Ambiguous Morality",
   "item.sbmod.ambiguous_morality_disc.desc": "Ambiguous Morality",
-  "item.sbmod.explosion_sheep_item": "爆炸绵羊发射器",
+  "item.sbmod.explosion_sheep_red": "爆炸绵羊发射器",
+  "item.sbmod.explosion_sheep_black": "黑洞绵羊发射器",
   "key.sbmod.Twilight": "SB工艺Mod",
   "key.sbmod.shit": "喷史"
 }

@@ -58,6 +58,7 @@ public class Main {
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntities.TWILIGHT_BUILDER.get(), Twilight_BuilderRenderer::new);
             EntityRenderers.register(ModEntities.EXPLOSION_SHEEP_RED.get(), Explosion_SheepRenderer::new);
+            EntityRenderers.register(ModEntities.EXPLOSION_SHEEP_BLACK.get(), Explosion_SheepRenderer::new);
         }
     }
      //Create Creative Mode Tab
@@ -73,7 +74,8 @@ public class Main {
                 output.accept(OPERATION_LEAD_SEAL_DISC.get());
                 output.accept(AMBIGUOUS_MORALITY_DISC.get());
                 output.accept(MISTY_MEMORY_DISC.get());
-                output.accept(EXPLOSION_SHEEP_ITEM.get());
+                output.accept(EXPLOSION_SHEEP_RED.get());
+                output.accept(EXPLOSION_SHEEP_BLACK.get());
                 // 添加更多物品
             })
             .build());

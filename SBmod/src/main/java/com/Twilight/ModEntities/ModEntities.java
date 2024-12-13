@@ -1,6 +1,7 @@
 package com.Twilight.ModEntities;
 
 import com.Twilight.ModEntities.custom.Explosion_SheepOri;
+import com.Twilight.ModEntities.custom.Explosion_Sheep_Black;
 import com.Twilight.ModEntities.custom.Explosion_Sheep_Red;
 import com.Twilight.ModEntities.custom.Twilight_Builder;
 import net.minecraft.world.entity.EntityType;
@@ -19,6 +20,9 @@ public class ModEntities {
     public static final RegistryObject<EntityType<Explosion_Sheep_Red>> EXPLOSION_SHEEP_RED =
             ENTITIY_TYPES.register("explosion_sheep_red", () -> EntityType.Builder.of(Explosion_Sheep_Red::new, MobCategory.CREATURE)
                     .sized(1.7f, 0.9f).build("explosion_sheep_red"));
+    public static final RegistryObject<EntityType<Explosion_Sheep_Black>> EXPLOSION_SHEEP_BLACK =
+            ENTITIY_TYPES.register("explosion_sheep_black", () -> EntityType.Builder.of(Explosion_Sheep_Black::new, MobCategory.CREATURE)
+                    .sized(1.7f, 0.9f).build("explosion_sheep_black"));
 
 
     public static void register(IEventBus eventBus) {

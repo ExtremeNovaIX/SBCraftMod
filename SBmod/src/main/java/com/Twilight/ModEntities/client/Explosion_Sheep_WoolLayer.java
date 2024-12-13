@@ -3,6 +3,7 @@
 package com.Twilight.ModEntities.client;
 
 import com.Twilight.ModEntities.custom.Explosion_SheepOri;
+import com.Twilight.ModEntities.custom.Explosion_Sheep_Black;
 import com.Twilight.ModEntities.custom.Explosion_Sheep_Red;
 import com.Twilight.SBMod.Main;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -35,8 +36,9 @@ public class Explosion_Sheep_WoolLayer extends RenderLayer<Explosion_SheepOri, E
         // 根据不同的羊类型返回不同的颜色
         if (sheep instanceof Explosion_Sheep_Red) {
             return new float[]{1.0F, 0.0F, 0.0F}; // 红色
+        } else if (sheep instanceof Explosion_Sheep_Black) {
+            return new float[]{0.0F, 0.0F, 0.0F};
         }
-        // 默认颜色（白色）
         return new float[]{1.0F, 1.0F, 1.0F};
     }
 }

@@ -17,9 +17,10 @@ public class ModItems {
 
     public static final RegistryObject<Item> SHIT = ITEMS.register("shit",
             () -> new Shit(new Item.Properties()));
-    public static final RegistryObject<Item> EXPLOSION_SHEEP_ITEM = ITEMS.register("explosion_sheep_item",
+    public static final RegistryObject<Item> EXPLOSION_SHEEP_RED = ITEMS.register("explosion_sheep_red",
             () -> new Explosion_Sheep_RedItem(new Item.Properties()));
-
+    public static final RegistryObject<Item> EXPLOSION_SHEEP_BLACK = ITEMS.register("explosion_sheep_black",
+            () -> new Explosion_Sheep_BlackItem(new Item.Properties()));
     public static final RegistryObject<Item> HEAD_K2536_BLOCK_ITEM = ITEMS.register("head_k2536_block",
             () -> new BlockItem(HEAD_K2536_BLOCK.get(), new Item.Properties()));
     public static final RegistryObject<Item> HEAD_EXTREMENOVAIX_BLOCK_ITEM = ITEMS.register("head_extremenovaix_block",

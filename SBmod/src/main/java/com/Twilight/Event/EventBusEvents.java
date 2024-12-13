@@ -15,5 +15,6 @@ public class EventBusEvents {
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(ModEntities.TWILIGHT_BUILDER.get(), Twilight_Builder.createAttributes().build());
         event.put(ModEntities.EXPLOSION_SHEEP_RED.get(), Explosion_SheepOri.createAttributes().build());
+        event.put(ModEntities.EXPLOSION_SHEEP_BLACK.get(), Explosion_SheepOri.createAttributes().build());
     }
 }
