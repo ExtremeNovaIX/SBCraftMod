@@ -1,6 +1,8 @@
 package com.Twilight.ModEntities.custom;
 
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -52,15 +54,22 @@ public class Explosion_Sheep_Black extends Explosion_SheepOri{
         AABB searchBox = this.getBoundingBox().inflate(ATTRACTION_RANGE);
         List<Entity> nearbyEntities = this.level().getEntities(this, searchBox);
         for (Entity entity : nearbyEntities) {
-            if (entity != this && entity instanceof LivingEntity && entity != thrower) {
+            if (entity != this && entity != thrower) {
                 // 计算方向向量
                 Vec3 attractionVector = this.position().subtract(entity.position());
                 attractionVector = attractionVector.normalize().scale(ATTRACTION_STRENGTH);
-                // 应用吸引力
-                entity.setDeltaMovement(entity.getDeltaMovement().add(attractionVector));
+                // 对于玩家，使用网络包
+                if (entity instanceof ServerPlayer) {
+                    ServerPlayer player = (ServerPlayer) entity;
+                    Vec3 newMotion = player.getDeltaMovement().add(attractionVector);
+                    player.connection.send(new ClientboundSetEntityMotionPacket(player.getId(), newMotion));
+                } else {
+                    // 对于其他实体，直接设置运动
+                    entity.setDeltaMovement(entity.getDeltaMovement().add(attractionVector));
+                    }
+                }
             }
         }
-    }
     protected void spawnParticles() {
         if (this.level().isClientSide) {
             double sheepX = this.getX();
