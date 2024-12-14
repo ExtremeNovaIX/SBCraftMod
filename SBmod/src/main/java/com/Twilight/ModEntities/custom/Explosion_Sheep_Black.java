@@ -5,15 +5,14 @@ import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-public class Explosion_Sheep_Black extends Explosion_SheepOri{
-    public Explosion_Sheep_Black(EntityType<? extends Explosion_SheepOri> entityType, Level level) {
+public class Explosion_Sheep_Black extends SheepOri {
+    public Explosion_Sheep_Black(EntityType<? extends SheepOri> entityType, Level level) {
         super(entityType, level);
     }
     private boolean Landed = false;

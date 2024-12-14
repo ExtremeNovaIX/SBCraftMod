@@ -1,9 +1,6 @@
 package com.Twilight.ModEntities;
 
-import com.Twilight.ModEntities.custom.Explosion_SheepOri;
-import com.Twilight.ModEntities.custom.Explosion_Sheep_Black;
-import com.Twilight.ModEntities.custom.Explosion_Sheep_Red;
-import com.Twilight.ModEntities.custom.Twilight_Builder;
+import com.Twilight.ModEntities.custom.*;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -23,6 +20,9 @@ public class ModEntities {
     public static final RegistryObject<EntityType<Explosion_Sheep_Black>> EXPLOSION_SHEEP_BLACK =
             ENTITIY_TYPES.register("explosion_sheep_black", () -> EntityType.Builder.of(Explosion_Sheep_Black::new, MobCategory.CREATURE)
                     .sized(1.7f, 0.9f).build("explosion_sheep_black"));
+    public static final RegistryObject<EntityType<Time_Freeze_Sheep>> TIME_FREEZE_SHEEP =
+            ENTITIY_TYPES.register("time_freeze_sheep", () -> EntityType.Builder.of(Time_Freeze_Sheep::new, MobCategory.CREATURE)
+                    .sized(1.7f, 0.9f).build("time_freeze_sheep"));
 
 
     public static void register(IEventBus eventBus) {

@@ -5,7 +5,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
-public class Explosion_Sheep_Red extends Explosion_SheepOri {
+public class Explosion_Sheep_Red extends SheepOri {
     public Explosion_Sheep_Red(EntityType<? extends Explosion_Sheep_Red> entityType, Level level) {
         super(entityType, level);
     }

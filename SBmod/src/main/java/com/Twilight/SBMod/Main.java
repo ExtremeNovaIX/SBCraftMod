@@ -1,7 +1,8 @@
 package com.Twilight.SBMod;
 
 import com.Twilight.ModEntities.ModEntities;
-import com.Twilight.ModEntities.client.Explosion_SheepRenderer;
+import com.Twilight.ModEntities.client.SheepRenderer;
+import com.Twilight.ModEntities.custom.Time_Freeze_Sheep;
 import com.Twilight.ModSounds.ModSounds;
 import com.Twilight.Packet.CustomPacket;
 import com.mojang.logging.LogUtils;
@@ -11,7 +12,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -57,8 +57,9 @@ public class Main {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntities.TWILIGHT_BUILDER.get(), Twilight_BuilderRenderer::new);
-            EntityRenderers.register(ModEntities.EXPLOSION_SHEEP_RED.get(), Explosion_SheepRenderer::new);
-            EntityRenderers.register(ModEntities.EXPLOSION_SHEEP_BLACK.get(), Explosion_SheepRenderer::new);
+            EntityRenderers.register(ModEntities.EXPLOSION_SHEEP_RED.get(), SheepRenderer::new);
+            EntityRenderers.register(ModEntities.EXPLOSION_SHEEP_BLACK.get(), SheepRenderer::new);
+            EntityRenderers.register(ModEntities.TIME_FREEZE_SHEEP.get(), SheepRenderer::new);
         }
     }
      //Create Creative Mode Tab
@@ -76,6 +77,7 @@ public class Main {
                 output.accept(MISTY_MEMORY_DISC.get());
                 output.accept(EXPLOSION_SHEEP_RED.get());
                 output.accept(EXPLOSION_SHEEP_BLACK.get());
+                output.accept(TIME_FREEZE_SHEEP.get());
                 // 添加更多物品
             })
             .build());

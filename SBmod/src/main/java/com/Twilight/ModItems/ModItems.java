@@ -17,6 +17,8 @@ public class ModItems {
 
     public static final RegistryObject<Item> SHIT = ITEMS.register("shit",
             () -> new Shit(new Item.Properties()));
+    public static final RegistryObject<Item> TIME_FREEZE_SHEEP = ITEMS.register("time_freeze_sheep",
+            () -> new Time_Freeze_SheepItem(new Item.Properties()));
     public static final RegistryObject<Item> EXPLOSION_SHEEP_RED = ITEMS.register("explosion_sheep_red",
             () -> new Explosion_Sheep_RedItem(new Item.Properties()));
     public static final RegistryObject<Item> EXPLOSION_SHEEP_BLACK = ITEMS.register("explosion_sheep_black",

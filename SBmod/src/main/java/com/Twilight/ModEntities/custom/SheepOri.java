@@ -13,9 +13,9 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
-public class Explosion_SheepOri extends Mob {
+public class SheepOri extends Mob {
     public Player thrower;
-    public Explosion_SheepOri(EntityType<? extends Explosion_SheepOri> entityType, Level level) {
+    public SheepOri(EntityType<? extends SheepOri> entityType, Level level) {
         super(entityType, level);
         this.addEffect(new MobEffectInstance(MobEffects.GLOWING, Integer.MAX_VALUE, 0, false, false));
         this.thrower = Explosion_Sheep_ItemOri.thrower;

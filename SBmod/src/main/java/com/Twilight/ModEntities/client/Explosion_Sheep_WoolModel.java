@@ -3,7 +3,7 @@ package com.Twilight.ModEntities.client;// Made with Blockbench 4.11.2
 // Paste this class into your mod and generate all required imports
 
 
-import com.Twilight.ModEntities.custom.Explosion_SheepOri;
+import com.Twilight.ModEntities.custom.SheepOri;
 import com.Twilight.SBMod.Main;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -14,7 +14,7 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 
-public class Explosion_Sheep_WoolModel extends EntityModel<Explosion_SheepOri> {
+public class Explosion_Sheep_WoolModel extends EntityModel<SheepOri> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Main.MOD_ID, "explosion_sheep_woolmodel"), "main");
 	private final ModelPart body;
@@ -66,7 +66,7 @@ public class Explosion_Sheep_WoolModel extends EntityModel<Explosion_SheepOri> {
 		leg4.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 	@Override
-	public void setupAnim(Explosion_SheepOri p_102618_, float p_102619_, float p_102620_, float p_102621_, float p_102622_, float p_102623_) {
+	public void setupAnim(SheepOri p_102618_, float p_102619_, float p_102620_, float p_102621_, float p_102622_, float p_102623_) {
 
 	}
 }

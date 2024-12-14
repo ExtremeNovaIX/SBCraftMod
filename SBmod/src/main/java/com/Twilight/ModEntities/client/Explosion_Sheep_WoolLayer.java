@@ -2,8 +2,8 @@
 
 package com.Twilight.ModEntities.client;
 
-import com.Twilight.ModEntities.custom.Explosion_SheepOri;
 import com.Twilight.ModEntities.custom.Explosion_Sheep_Black;
+import com.Twilight.ModEntities.custom.SheepOri;
 import com.Twilight.ModEntities.custom.Explosion_Sheep_Red;
 import com.Twilight.SBMod.Main;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -13,17 +13,17 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 
-public class Explosion_Sheep_WoolLayer extends RenderLayer<Explosion_SheepOri, Explosion_SheepModel<Explosion_SheepOri>> {
+public class Explosion_Sheep_WoolLayer extends RenderLayer<SheepOri, Explosion_SheepModel<SheepOri>> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Main.MOD_ID, "textures/entities/sheep_wool.png");
     private final Explosion_Sheep_WoolModel woolModel;
 
-    public Explosion_Sheep_WoolLayer(RenderLayerParent<Explosion_SheepOri, Explosion_SheepModel<Explosion_SheepOri>> renderer, EntityModelSet modelSet) {
+    public Explosion_Sheep_WoolLayer(RenderLayerParent<SheepOri, Explosion_SheepModel<SheepOri>> renderer, EntityModelSet modelSet) {
         super(renderer);
         this.woolModel = new Explosion_Sheep_WoolModel(modelSet.bakeLayer(ModModelLayers.EXPLOSION_SHEEP_WOOL_LAYER));
     }
 
     @Override
-    public void render(PoseStack matrixStack, MultiBufferSource buffer, int packedLight, Explosion_SheepOri sheep,
+    public void render(PoseStack matrixStack, MultiBufferSource buffer, int packedLight, SheepOri sheep,
                        float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (!sheep.isInvisible()) {
             float[] colors = getWoolColor(sheep);
@@ -32,7 +32,7 @@ public class Explosion_Sheep_WoolLayer extends RenderLayer<Explosion_SheepOri, E
         }
     }
 
-    private float[] getWoolColor(Explosion_SheepOri sheep) {
+    private float[] getWoolColor(SheepOri sheep) {
         // 根据不同的羊类型返回不同的颜色
         if (sheep instanceof Explosion_Sheep_Red) {
             return new float[]{1.0F, 0.0F, 0.0F}; // 红色
