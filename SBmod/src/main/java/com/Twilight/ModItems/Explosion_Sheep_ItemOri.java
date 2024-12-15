@@ -15,8 +15,8 @@ import java.util.function.Function;
 public class Explosion_Sheep_ItemOri {
     public static Player thrower;
     public static <T extends Mob> void initializeAndSpawnSheep(Level level, Player player, ItemStack itemStack, Function<Level, T> sheepSupplier) {
+        thrower = player;
         if (!level.isClientSide()) {
-            thrower = player;
             T sheep = sheepSupplier.apply(level);
             sheep.setPos(player.getX() + 0.5, player.getY() + 1.0, player.getZ() + 0.5);
             sheep.setYRot(player.getYRot());
@@ -38,5 +38,8 @@ public class Explosion_Sheep_ItemOri {
         level.playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.FIREWORK_ROCKET_LAUNCH, SoundSource.PLAYERS,
                 1.0F, pitch);
+    }
+    public static Player getThrower() {
+        return thrower;
     }
 }

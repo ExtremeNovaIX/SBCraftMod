@@ -11,6 +11,8 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
+import static com.Twilight.ModItems.Explosion_Sheep_ItemOri.getThrower;
+
 public class Explosion_Sheep_Black extends SheepOri {
     public Explosion_Sheep_Black(EntityType<? extends SheepOri> entityType, Level level) {
         super(entityType, level);
@@ -53,7 +55,7 @@ public class Explosion_Sheep_Black extends SheepOri {
         AABB searchBox = this.getBoundingBox().inflate(ATTRACTION_RANGE);
         List<Entity> nearbyEntities = this.level().getEntities(this, searchBox);
         for (Entity entity : nearbyEntities) {
-            if (entity != this && entity != thrower) {
+            if (entity != this && entity != getThrower()) {
                 // 计算方向向量
                 Vec3 attractionVector = this.position().subtract(entity.position());
                 attractionVector = attractionVector.normalize().scale(ATTRACTION_STRENGTH);
