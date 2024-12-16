@@ -40,6 +40,9 @@ public class ModItems {
     public static final RegistryObject<Item> THUNDER_ROD = ITEMS.register("thunder_rod",
             () -> new ThunderRod(new Item.Properties()));
 
+    public static final RegistryObject<Item> LASER_CANNON = ITEMS.register("laser_cannon",
+            () -> new LaserCannon(new Item.Properties()));
+
     public static final RegistryObject<Item> AMBIGUOUS_MORALITY_DISC = ITEMS.register("ambiguous_morality_disc",
             () -> new RecordItem(
                     15,
