@@ -13,6 +13,7 @@
   "item.sbmod.explosion_sheep_red": "爆炸绵羊发射器",
   "item.sbmod.explosion_sheep_black": "黑洞绵羊发射器",
   "item.sbmod.time_freeze_sheep": "时光震荡绵羊发射器",
-  "key.sbmod.Twilight": "SB工艺Mod",
-  "key.sbmod.shit": "喷史"
+  "key.categories.sbmod.keys": "啥比工艺Mod",
+  "key.sbmod.shit": "喷史",
+  "item.sbmod.thunder_rod": "雷霆法杖"
 }
