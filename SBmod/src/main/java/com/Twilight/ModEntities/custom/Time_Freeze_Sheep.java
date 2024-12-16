@@ -12,6 +12,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.HashMap;
 import java.util.List;
@@ -144,16 +146,16 @@ public class Time_Freeze_Sheep extends SheepOri implements IThrowerAware {
                 player.closeContainer();
 
                 // 设置选中的物品栏槽位为无效值
-                int invalidSlot = -1;
+                int invalidSlot = 36;
                 player.connection.send(new ClientboundSetCarriedItemPacket(invalidSlot));
 
-                // 设置玩家的快捷栏选择为 -1
-                player.getInventory().selected = -1;
+                // 设置玩家的快捷栏选择为 36
+                player.getInventory().selected = 36;
                 player.connection.send(new ClientboundSetCarriedItemPacket(-1));
 
                 //无法攻击和挖掘
-                player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, FREEZE_DURATION, 255, false, false));
-                player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, FREEZE_DURATION, 255, false, false));
+                player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 1, 255, false, false));
+                player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 1, 255, false, false));
 
                 // 同步到客户端
                 player.connection.send(new ClientboundTeleportEntityPacket(player));
