@@ -13,12 +13,17 @@ public class Explosion_Sheep_BlackItem extends Item {
     public Explosion_Sheep_BlackItem(Properties p_41383_) {
         super(p_41383_);
     }
+
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
 
         Explosion_Sheep_ItemOri.initializeAndSpawnSheep(level, player, itemStack,
-                (l) -> new Explosion_Sheep_Black(ModEntities.EXPLOSION_SHEEP_BLACK.get(), l));
+                (l, p) -> {
+                    Explosion_Sheep_Black sheep = new Explosion_Sheep_Black(ModEntities.EXPLOSION_SHEEP_BLACK.get(), l);
+                    sheep.setThrower(p);  // 设置投掷者
+                    return sheep;
+                });
 
         return InteractionResultHolder.sidedSuccess(itemStack, level.isClientSide());
     }

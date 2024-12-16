@@ -2,6 +2,8 @@
 
 package com.Twilight.ModItems;
 
+import com.Twilight.ModEntities.custom.IThrowerAware;
+import com.Twilight.ModEntities.custom.SheepOri;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Mob;
@@ -10,14 +12,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 import java.util.Random;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class Explosion_Sheep_ItemOri {
     public static Player thrower;
-    public static <T extends Mob> void initializeAndSpawnSheep(Level level, Player player, ItemStack itemStack, Function<Level, T> sheepSupplier) {
-        thrower = player;
+    public static <T extends SheepOri> void initializeAndSpawnSheep(Level level, Player player, ItemStack itemStack, BiFunction<Level, Player, T> sheepSupplier) {
         if (!level.isClientSide()) {
-            T sheep = sheepSupplier.apply(level);
+            T sheep = sheepSupplier.apply(level, player);
+            if (sheep instanceof IThrowerAware) {
+                ((IThrowerAware) sheep).setThrower(player);
+            }
             sheep.setPos(player.getX() + 0.5, player.getY() + 1.0, player.getZ() + 0.5);
             sheep.setYRot(player.getYRot());
             sheep.setXRot(player.getXRot());
@@ -41,5 +46,10 @@ public class Explosion_Sheep_ItemOri {
     }
     public static Player getThrower() {
         return thrower;
+    }
+    public static <T extends Mob> void setThrower(T sheep, Player player) {
+        if (sheep instanceof IThrowerAware) {
+            ((IThrowerAware) sheep).setThrower(player);
+        }
     }
 }

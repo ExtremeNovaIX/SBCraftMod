@@ -2,6 +2,8 @@ package com.Twilight.ModEntities.custom;
 
 import net.minecraft.network.protocol.game.*;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,7 +21,8 @@ import java.util.Set;
 import static com.Twilight.ModItems.Explosion_Sheep_ItemOri.getThrower;
 import static com.Twilight.ModItems.Explosion_Sheep_ItemOri.thrower;
 
-public class Time_Freeze_Sheep extends SheepOri {
+public class Time_Freeze_Sheep extends SheepOri implements IThrowerAware {
+    private Player thrower;
     private static final double FREEZE_RADIUS = 10.0;
     private static final int FREEZE_DURATION = 300;
     private int freezeTimer = 0;
@@ -29,6 +32,16 @@ public class Time_Freeze_Sheep extends SheepOri {
 
     public Time_Freeze_Sheep(EntityType<? extends SheepOri> entityType, Level level) {
         super(entityType, level);
+    }
+
+    @Override
+    public void setThrower(Player player) {
+        this.thrower = player;
+    }
+
+    @Override
+    public Player getThrower() {
+        return thrower;
     }
 
     private static class EntityData {
@@ -110,7 +123,7 @@ public class Time_Freeze_Sheep extends SheepOri {
         for(Map.Entry<Entity, EntityData> entry : frozenPlayers.entrySet()){
             Entity entity = entry.getKey();
             EntityData data = entry.getValue();
-            if (entity instanceof ServerPlayer player) {
+            if (entity instanceof ServerPlayer player && entity != getThrower()) {
                 // 锁定旋转和位置
                 player.connection.send(new ClientboundPlayerPositionPacket(
                         data.position.x, data.position.y, data.position.z,
@@ -137,6 +150,10 @@ public class Time_Freeze_Sheep extends SheepOri {
                 // 设置玩家的快捷栏选择为 -1
                 player.getInventory().selected = -1;
                 player.connection.send(new ClientboundSetCarriedItemPacket(-1));
+
+                //无法攻击和挖掘
+                player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, FREEZE_DURATION, 255, false, false));
+                player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, FREEZE_DURATION, 255, false, false));
 
                 // 同步到客户端
                 player.connection.send(new ClientboundTeleportEntityPacket(player));
@@ -166,6 +183,9 @@ public class Time_Freeze_Sheep extends SheepOri {
             if (entity instanceof ServerPlayer player) {
                 player.setDeltaMovement(data.motion);
                 entity.setNoGravity(false);
+                player.getInventory().selected = 1;
+                player.connection.send(new ClientboundSetCarriedItemPacket(1));
+
             }
         }
         frozenEntities.clear();

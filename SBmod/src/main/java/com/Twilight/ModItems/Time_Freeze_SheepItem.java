@@ -1,6 +1,7 @@
 package com.Twilight.ModItems;
 
 import com.Twilight.ModEntities.ModEntities;
+import com.Twilight.ModEntities.custom.Explosion_Sheep_Black;
 import com.Twilight.ModEntities.custom.Time_Freeze_Sheep;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -19,7 +20,11 @@ public class Time_Freeze_SheepItem extends Item {
 
 
         Explosion_Sheep_ItemOri.initializeAndSpawnSheep(level, player, itemStack,
-                (l) -> new Time_Freeze_Sheep(ModEntities.TIME_FREEZE_SHEEP.get(), l));
+                (l, p) -> {
+                    Time_Freeze_Sheep sheep = new Time_Freeze_Sheep(ModEntities.TIME_FREEZE_SHEEP.get(), l);
+                    sheep.setThrower(p);  // 设置投掷者
+                    return sheep;
+                });
 
         return InteractionResultHolder.sidedSuccess(itemStack, level.isClientSide());
     }

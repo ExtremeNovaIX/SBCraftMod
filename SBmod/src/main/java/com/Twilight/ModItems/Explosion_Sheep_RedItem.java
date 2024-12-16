@@ -18,9 +18,8 @@ public class Explosion_Sheep_RedItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
 
-
         Explosion_Sheep_ItemOri.initializeAndSpawnSheep(level, player, itemStack,
-                (l) -> new Explosion_Sheep_Red(ModEntities.EXPLOSION_SHEEP_RED.get(), l));
+                (l, p) -> new Explosion_Sheep_Red(ModEntities.EXPLOSION_SHEEP_RED.get(), l));
 
         return InteractionResultHolder.sidedSuccess(itemStack, level.isClientSide());
     }

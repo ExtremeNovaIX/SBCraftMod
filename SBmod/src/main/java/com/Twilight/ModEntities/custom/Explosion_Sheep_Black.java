@@ -5,18 +5,29 @@ import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-import static com.Twilight.ModItems.Explosion_Sheep_ItemOri.getThrower;
 
-public class Explosion_Sheep_Black extends SheepOri {
+public class Explosion_Sheep_Black extends SheepOri implements IThrowerAware {
+    private Player thrower;
+
     public Explosion_Sheep_Black(EntityType<? extends SheepOri> entityType, Level level) {
         super(entityType, level);
     }
+
+    public void setThrower(Player player) {
+        this.thrower = player;
+    }
+
+    public Player getThrower() {
+        return thrower;
+    }
+
     private boolean Landed = false;
     private static final double ATTRACTION_RANGE = 16.0; // 吸引范围，单位是方块
     private static final double ATTRACTION_STRENGTH = 0.3; // 吸引力强度
