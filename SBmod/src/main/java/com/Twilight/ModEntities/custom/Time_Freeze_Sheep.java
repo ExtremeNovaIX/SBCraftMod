@@ -1,7 +1,9 @@
 package com.Twilight.ModEntities.custom;
 
+import com.Twilight.ModSounds.ModSounds;
 import net.minecraft.network.protocol.game.*;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -26,7 +28,7 @@ import static com.Twilight.ModItems.Explosion_Sheep_ItemOri.thrower;
 public class Time_Freeze_Sheep extends SheepOri implements IThrowerAware {
     private Player thrower;
     private static final double FREEZE_RADIUS = 10.0;
-    private static final int FREEZE_DURATION = 300;
+    private static final int FREEZE_DURATION = 200;
     private int freezeTimer = 0;
     private boolean isFreezingTime = false;
     private Map<Entity, EntityData> frozenEntities = new HashMap<>();
@@ -79,6 +81,11 @@ public class Time_Freeze_Sheep extends SheepOri implements IThrowerAware {
                 isFreezingTime = true;
                 setNoGravity(true);
                 this.setDeltaMovement(0, 0, 0);
+                if(isFreezingTime && !this.level().isClientSide) {
+                    this.level().playSound(null, this.getX(), this.getY(), this.getZ(),
+                            ModSounds.TIME_FREEZE.get(),
+                            SoundSource.NEUTRAL, 4.0F, 1.0F);
+                }
             }
         } else {
             if (freezeTimer < FREEZE_DURATION) {

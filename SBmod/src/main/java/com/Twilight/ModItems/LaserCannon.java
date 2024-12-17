@@ -45,8 +45,6 @@ public class LaserCannon extends Item {
                     if (playerToEntityVec.normalize().dot(lookVec.normalize()) > 0.996) {
                         LivingEntity livingEntity = (LivingEntity) entity;
                         livingEntity.hurt(level.damageSources().magic(), 4.5f);
-
-
                     }
 
                 }

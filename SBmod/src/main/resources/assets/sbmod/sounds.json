@@ -22,5 +22,13 @@
 				"stream": true
 			}
 		]
+	},
+	"time_freeze": {
+		"sounds": [
+			{
+				"name": "sbmod:time_freeze",
+				"stream": true
+			}
+		]
 	}
 }

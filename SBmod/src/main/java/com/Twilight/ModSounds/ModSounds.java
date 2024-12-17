@@ -15,6 +15,7 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> OPERATION_LEAD_SEAL_DISC = registerSoundEvent("operation_lead_seal_disc");
     public static final RegistryObject<SoundEvent> AMBIGUOUS_MORALITY_DISC = registerSoundEvent("ambiguous_morality_disc");
     public static final RegistryObject<SoundEvent> MISTY_MEMORY_DISC = registerSoundEvent("misty_memory_disc");
+    public static final RegistryObject<SoundEvent> TIME_FREEZE = registerSoundEvent("time_freeze");
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Main.MOD_ID, name)));
