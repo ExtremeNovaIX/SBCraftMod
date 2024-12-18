@@ -1,30 +1,28 @@
 package com.Twilight.ModEntities.custom;
 
 import com.Twilight.ModSounds.ModSounds;
+import com.Twilight.SBMod.Main;
 import net.minecraft.network.protocol.game.*;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.level.BlockEvent;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
+
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import java.util.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import static com.Twilight.ModItems.Explosion_Sheep_ItemOri.getThrower;
-import static com.Twilight.ModItems.Explosion_Sheep_ItemOri.thrower;
-
+@Mod.EventBusSubscriber(modid = Main.MOD_ID)
 public class Time_Freeze_Sheep extends SheepOri implements IThrowerAware {
     private Player thrower;
     private static final double FREEZE_RADIUS = 10.0;
@@ -33,9 +31,11 @@ public class Time_Freeze_Sheep extends SheepOri implements IThrowerAware {
     private boolean isFreezingTime = false;
     private Map<Entity, EntityData> frozenEntities = new HashMap<>();
     private Map<Entity, EntityData> frozenPlayers = new HashMap<>();
+    private static Time_Freeze_Sheep instance;
 
     public Time_Freeze_Sheep(EntityType<? extends SheepOri> entityType, Level level) {
         super(entityType, level);
+        instance = this;
     }
 
     @Override
@@ -81,7 +81,7 @@ public class Time_Freeze_Sheep extends SheepOri implements IThrowerAware {
                 isFreezingTime = true;
                 setNoGravity(true);
                 this.setDeltaMovement(0, 0, 0);
-                if(isFreezingTime && !this.level().isClientSide) {
+                if (isFreezingTime && !this.level().isClientSide) {
                     this.level().playSound(null, this.getX(), this.getY(), this.getZ(),
                             ModSounds.TIME_FREEZE.get(),
                             SoundSource.NEUTRAL, 4.0F, 1.0F);
@@ -107,8 +107,12 @@ public class Time_Freeze_Sheep extends SheepOri implements IThrowerAware {
         for (Entity entity : entitiesInRange) {
             if (entity != this && !(entity instanceof Player) && !frozenEntities.containsKey(entity)) {
                 frozenEntities.put(entity, new EntityData(entity));
-            }else if(entity != this && entity != getThrower() && entity instanceof Player && !frozenPlayers.containsKey(entity)) {
+                disableEntitySounds(entity);
+                disableEntityAnimations(entity);
+            } else if (entity != this && entity != getThrower() && entity instanceof Player && !frozenPlayers.containsKey(entity)) {
                 frozenPlayers.put(entity, new EntityData(entity));
+                disableEntitySounds(entity);
+                disableEntityAnimations(entity);
             }
         }
     }
@@ -119,17 +123,17 @@ public class Time_Freeze_Sheep extends SheepOri implements IThrowerAware {
             Entity entity = entry.getKey();
             EntityData data = entry.getValue();
 
-                entity.setPos(data.position.x, data.position.y, data.position.z);
-                entity.setDeltaMovement(Vec3.ZERO);
-                entity.setYRot(data.yRot);
-                entity.setXRot(data.xRot);
+            entity.setPos(data.position.x, data.position.y, data.position.z);
+            entity.setDeltaMovement(Vec3.ZERO);
+            entity.setYRot(data.yRot);
+            entity.setXRot(data.xRot);
             if (entity instanceof Mob) {
                 ((Mob) entity).setNoAi(true);
-                }
-            entity.setNoGravity(true);
             }
+            entity.setNoGravity(true);
+        }
         //冻结玩家
-        for(Map.Entry<Entity, EntityData> entry : frozenPlayers.entrySet()){
+        for (Map.Entry<Entity, EntityData> entry : frozenPlayers.entrySet()) {
             Entity entity = entry.getKey();
             EntityData data = entry.getValue();
             if (entity instanceof ServerPlayer player && entity != getThrower()) {
@@ -155,10 +159,20 @@ public class Time_Freeze_Sheep extends SheepOri implements IThrowerAware {
                 // 设置选中的物品栏槽位为无效值
                 int invalidSlot = 36;
                 player.connection.send(new ClientboundSetCarriedItemPacket(invalidSlot));
-
                 // 设置玩家的快捷栏选择为 36
                 player.getInventory().selected = 36;
                 player.connection.send(new ClientboundSetCarriedItemPacket(-1));
+
+                // 禁用玩家蹲下
+                player.setPose(Pose.STANDING);
+                SynchedEntityData entityData = player.getEntityData();
+                entityData.set(Player.DATA_POSE, Pose.STANDING);
+
+                List<SynchedEntityData.DataValue<?>> dataValues = List.of(
+                        SynchedEntityData.DataValue.create(Player.DATA_POSE, Pose.STANDING)
+                );
+
+                player.connection.send(new ClientboundSetEntityDataPacket(player.getId(), dataValues));
 
                 //无法攻击和挖掘
                 player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 1, 255, false, false));
@@ -183,9 +197,10 @@ public class Time_Freeze_Sheep extends SheepOri implements IThrowerAware {
                 ((Mob) entity).setNoAi(false);
             }
             entity.setNoGravity(false);
+            enableEntitySounds(entity);
         }
         //解冻玩家
-        for(Map.Entry<Entity, EntityData> entry : frozenPlayers.entrySet()){
+        for (Map.Entry<Entity, EntityData> entry : frozenPlayers.entrySet()) {
             Entity entity = entry.getKey();
             EntityData data = entry.getValue();
 
@@ -194,7 +209,7 @@ public class Time_Freeze_Sheep extends SheepOri implements IThrowerAware {
                 entity.setNoGravity(false);
                 player.getInventory().selected = 1;
                 player.connection.send(new ClientboundSetCarriedItemPacket(1));
-
+                enableEntitySounds(entity);
             }
         }
         frozenEntities.clear();
@@ -212,4 +227,47 @@ public class Time_Freeze_Sheep extends SheepOri implements IThrowerAware {
     public boolean isPushable() {
         return !isFreezingTime;
     }
+
+    private void disableEntitySounds(Entity entity) {
+        entity.setSilent(true);
+    }
+
+    private void enableEntitySounds(Entity entity) {
+        entity.setSilent(false);
+    }
+
+    private void disableEntityAnimations(Entity entity) {
+        if (entity instanceof LivingEntity livingEntity) {
+            // 停止摆臂动画
+            livingEntity.attackAnim = 0;
+            livingEntity.oAttackAnim = 0;
+
+            // 尝试停止其他动画
+            livingEntity.tickCount = Integer.MIN_VALUE;
+        }
+    }
+//暂未实现的功能
+//    private static boolean isAffectedPlayer(Player player) {
+//        return instance != null &&
+//                instance.frozenPlayers.containsKey(player) &&
+//                player != instance.getThrower();
+//    }
+//
+//    @SubscribeEvent
+//    public static void onLivingAttack(LivingAttackEvent event) {
+//        Entity attacker = event.getSource().getEntity();
+//        if (attacker instanceof Player && isAffectedPlayer((Player) attacker)) {
+//            event.setCanceled(true);
+//        }
+//    }
+//
+//    @SubscribeEvent
+//    public static void onPlayerInteract(PlayerInteractEvent event) {
+//        if (isAffectedPlayer(event.getEntity())) {
+//            event.setCanceled(true);
+//        }
+//    }
 }
+
+
+
