@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/SBCraft-mod.iml" filepath="$PROJECT_DIR$/.idea/SBCraft-mod.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SBCraft-mod.SBmod.test.iml" filepath="$PROJECT_DIR$/.idea/modules/SBCraft-mod.SBmod.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/SBCraftMod.SBmod.main.iml" filepath="$PROJECT_DIR$/.idea/modules/SBCraftMod.SBmod.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/SBmod.main.iml" filepath="$PROJECT_DIR$/.idea/modules/SBmod.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/SBmod.test.iml" filepath="$PROJECT_DIR$/.idea/modules/SBmod.test.iml" />

@@ -2,16 +2,20 @@ package com.Twilight.ModItems;
 
 import com.Twilight.ModEntities.ModEntities;
 import com.Twilight.ModEntities.custom.Explosion_Sheep_Black;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+
+import java.util.function.Consumer;
 
 public class Explosion_Sheep_BlackItem extends Item {
-    public Explosion_Sheep_BlackItem(Properties p_41383_) {
-        super(p_41383_);
+    public Explosion_Sheep_BlackItem(Properties properties) {
+        super(properties);
     }
 
     @Override

@@ -12,3 +12,4 @@ public class ModModelLayers {
     public static final ModelLayerLocation EXPLOSION_SHEEP_WOOL_LAYER = new ModelLayerLocation(
             new ResourceLocation(Main.MOD_ID, "explosion_sheep_wool"), "main");
 }
+

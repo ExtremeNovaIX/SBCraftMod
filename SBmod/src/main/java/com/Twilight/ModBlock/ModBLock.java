@@ -20,6 +20,4 @@ public class ModBLock {
             () -> new Block(BlockBehaviour.Properties.of().strength(1)));
     public static final RegistryObject<Block> HEAD_TWILIGHTBUILDER = BLOCKS.register("head_twilightbuilder_block",
             () -> new Block(BlockBehaviour.Properties.of().strength(1)));
-
-
-    }
+}

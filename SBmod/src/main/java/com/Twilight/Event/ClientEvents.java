@@ -24,4 +24,3 @@ public class ClientEvents {
         event.registerLayerDefinition(ModModelLayers.EXPLOSION_SHEEP_LAYER, Explosion_SheepModel::createBodyLayer);
     }
 }
-
