@@ -1,5 +1,7 @@
 package com.Twilight.ModItems;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
@@ -8,11 +10,13 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 import static net.minecraft.world.entity.EntityType.LIGHTNING_BOLT;
@@ -20,6 +24,13 @@ import static net.minecraft.world.entity.EntityType.LIGHTNING_BOLT;
 public class ThunderRod extends Item {
     public ThunderRod(Properties properties) {
         super(properties);
+    }
+
+    // 添加物品描述
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        tooltip.add(Component.translatable("item.sbmod.thunder_rod.desc").withStyle(ChatFormatting.GRAY));
+        super.appendHoverText(stack, level, tooltip, flag);
     }
 
     @Override
