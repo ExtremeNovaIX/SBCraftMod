@@ -2,18 +2,28 @@ package com.Twilight.ModEntities.custom;
 
 import com.Twilight.ModSounds.ModSounds;
 import com.Twilight.SBMod.Main;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.*;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import java.util.*;
 
@@ -87,6 +97,7 @@ public class Time_Freeze_Sheep extends SheepOri implements IThrowerAware {
                 freezeTime();
                 maintainFrozenState();
                 freezeTimer++;
+                spawnFreezeParticles();
             } else {
                 unfreezeEntities();
                 isFreezingTime = false;
@@ -241,27 +252,52 @@ public class Time_Freeze_Sheep extends SheepOri implements IThrowerAware {
             livingEntity.tickCount = Integer.MIN_VALUE;
         }
     }
-//暂未实现的功能
-//    private static boolean isAffectedPlayer(Player player) {
-//        return instance != null &&
-//                instance.frozenPlayers.containsKey(player) &&
-//                player != instance.getThrower();
-//    }
-//
-//    @SubscribeEvent
-//    public static void onLivingAttack(LivingAttackEvent event) {
-//        Entity attacker = event.getSource().getEntity();
-//        if (attacker instanceof Player && isAffectedPlayer((Player) attacker)) {
-//            event.setCanceled(true);
-//        }
-//    }
-//
-//    @SubscribeEvent
-//    public static void onPlayerInteract(PlayerInteractEvent event) {
-//        if (isAffectedPlayer(event.getEntity())) {
-//            event.setCanceled(true);
-//        }
-//    }
+
+    private void spawnFreezeParticles() {
+        if (!this.level().isClientSide) {
+            ServerLevel serverLevel = (ServerLevel) this.level();
+            double maxRadius = FREEZE_RADIUS;
+            int particleCount = 60;
+
+            if (isFreezingTime) {
+                // 冻结效果持续期间，粒子向中心聚集
+                double radius = maxRadius * (1 - (double) freezeTimer / FREEZE_DURATION);
+
+                for (int i = 0; i < particleCount; i++) {
+                    double theta = this.random.nextDouble() * Math.PI * 2;
+                    double phi = this.random.nextDouble() * Math.PI;
+                    double x = this.getX() + radius * Math.sin(phi) * Math.cos(theta);
+                    double y = this.getY() + radius * Math.sin(phi) * Math.sin(theta);
+                    double z = this.getZ() + radius * Math.cos(phi);
+
+                    Vec3 particlePos = new Vec3(x, y, z);
+                    Vec3 centerPos = this.position();
+                    Vec3 direction = centerPos.subtract(particlePos).normalize();
+
+                    double speed = 0.05;
+                    double motionX = direction.x * speed;
+                    double motionY = direction.y * speed;
+                    double motionZ = direction.z * speed;
+
+                    spawnMixedParticles(serverLevel, x, y, z, motionX, motionY, motionZ);
+                }
+            }
+        }
+    }
+
+    private void spawnMixedParticles(ServerLevel serverLevel, double x, double y, double z, double motionX, double motionY, double motionZ) {
+        switch (this.random.nextInt(3)) {
+            case 0:
+                serverLevel.sendParticles(ParticleTypes.ELECTRIC_SPARK, x, y, z, 1, motionX, motionY, motionZ, 0.1);
+                break;
+            case 1:
+                serverLevel.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, motionX, motionY, motionZ, 0.1);
+                break;
+            case 2:
+                serverLevel.sendParticles(ParticleTypes.GLOW, x, y, z, 1, motionX, motionY, motionZ, 0.1);
+                break;
+        }
+    }
 }
 
 

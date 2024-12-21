@@ -1,9 +1,6 @@
 package com.Twilight.ModItems;
 import com.Twilight.ModSounds.ModSounds;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.RecordItem;
+import net.minecraft.world.item.*;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -13,12 +10,10 @@ import static com.Twilight.SBMod.Main.MOD_ID;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
-
-
     public static final RegistryObject<Item> SHIT = ITEMS.register("shit",
             () -> new Shit(new Item.Properties()));
     public static final RegistryObject<Item> TIME_FREEZE_SHEEP = ITEMS.register("time_freeze_sheep",
-            () -> new Time_Freeze_SheepItem(new Item.Properties()));
+            () -> new Time_Freeze_SheepItem(new Item.Properties().rarity(Rarity.EPIC)));
     public static final RegistryObject<Item> EXPLOSION_SHEEP_RED = ITEMS.register("explosion_sheep_red",
             () -> new Explosion_Sheep_RedItem(new Item.Properties()));
     public static final RegistryObject<Item> EXPLOSION_SHEEP_BLACK = ITEMS.register("explosion_sheep_black",

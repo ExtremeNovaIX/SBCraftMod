@@ -78,6 +78,8 @@ public class Main {
                 output.accept(EXPLOSION_SHEEP_RED.get());
                 output.accept(EXPLOSION_SHEEP_BLACK.get());
                 output.accept(TIME_FREEZE_SHEEP.get());
+                output.accept(THUNDER_ROD.get());
+                output.accept(LASER_CANNON.get());
                 // 添加更多物品
             })
             .build());
