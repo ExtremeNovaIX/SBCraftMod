@@ -19,6 +19,11 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> LASER_CANNON_IN_HAND = registerSoundEvent("laser_cannon_in_hand");
     public static final RegistryObject<SoundEvent> LASER_CANNON_SHOOTING = registerSoundEvent("laser_cannon_shooting");
     public static final RegistryObject<SoundEvent> THUNDER_ROD_CHARGE = registerSoundEvent("thunder_rod_charge");
+    public static final RegistryObject<SoundEvent> RESPLENDENT_BLADE_DASHING = registerSoundEvent("resplendent_blade_dashing");
+    public static final RegistryObject<SoundEvent> RESPLENDENT_BLADE_DASHING_START = registerSoundEvent("resplendent_blade_dashing_start");
+    public static final RegistryObject<SoundEvent> RESPLENDENT_BLADE_DEFENDING = registerSoundEvent("resplendent_blade_defending");
+    public static final RegistryObject<SoundEvent> RESPLENDENT_BLADE_NORMAL = registerSoundEvent("resplendent_blade_normal");
+
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Main.MOD_ID, name)));

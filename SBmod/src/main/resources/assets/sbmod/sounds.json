@@ -51,7 +51,39 @@
 		"sounds": [
 			{
 				"name": "sbmod:thunder_rod_charge",
-				"stream": false
+				"stream": true
+			}
+		]
+	},
+	"resplendent_blade_dashing": {
+		"sounds": [
+			{
+				"name": "sbmod:resplendent_blade_dashing",
+				"stream": true
+			}
+		]
+	},
+	"resplendent_blade_dashing_start": {
+		"sounds": [
+			{
+				"name": "sbmod:resplendent_blade_dashing_start",
+				"stream": true
+			}
+		]
+	},
+	"resplendent_blade_defending": {
+		"sounds": [
+			{
+				"name": "sbmod:resplendent_blade_defending",
+				"stream": true
+			}
+		]
+	},
+	"resplendent_blade_normal": {
+		"sounds": [
+			{
+				"name": "sbmod:resplendent_blade_normal",
+				"stream": true
 			}
 		]
 	}

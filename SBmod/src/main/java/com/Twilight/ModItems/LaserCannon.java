@@ -24,7 +24,7 @@ public class LaserCannon extends Item {
     public LaserCannon(Item.Properties properties) {
         super(properties);
     }
-    private SoundInstance shootingSoundInstance;
+
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         level.playSound(null, player.getX(), player.getY(), player.getZ(),

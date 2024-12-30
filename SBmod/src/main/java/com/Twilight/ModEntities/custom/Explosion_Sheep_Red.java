@@ -19,14 +19,12 @@ public class Explosion_Sheep_Red extends SheepOri {
         }
     }
 
-
     protected void explode() {
         if (!this.level().isClientSide) {
             this.level().explode(this, this.getX(), this.getY(), this.getZ(), 4F, Level.ExplosionInteraction.TNT);
             this.remove(Entity.RemovalReason.KILLED);
         }
     }
-
 
     protected void spawnParticles() {
         if (this.level().isClientSide) {

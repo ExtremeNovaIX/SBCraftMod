@@ -8,22 +8,14 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.stats.Stats;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import java.util.*;
 
@@ -36,11 +28,9 @@ public class Time_Freeze_Sheep extends SheepOri implements IThrowerAware {
     private boolean isFreezingTime = false;
     private Map<Entity, EntityData> frozenEntities = new HashMap<>();
     private Map<Entity, EntityData> frozenPlayers = new HashMap<>();
-    private static Time_Freeze_Sheep instance;
 
     public Time_Freeze_Sheep(EntityType<? extends SheepOri> entityType, Level level) {
         super(entityType, level);
-        instance = this;
     }
 
     @Override

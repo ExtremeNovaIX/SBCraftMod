@@ -7,6 +7,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 import static com.Twilight.ModBlock.ModBLock.*;
 import static com.Twilight.SBMod.Main.MOD_ID;
+import static net.minecraft.world.item.Tiers.DIAMOND;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
@@ -24,6 +25,8 @@ public class ModItems {
             () -> new BlockItem(HEAD_EXTREMENOVAIX_BLOCK.get(), new Item.Properties()));
     public static final RegistryObject<Item> HEAD_TWILIGHTBUILDER_BLOCK_ITEM = ITEMS.register("head_twilightbuilder_block",
             () -> new BlockItem(HEAD_TWILIGHTBUILDER.get(), new Item.Properties()));
+    public static final RegistryObject<Item> RESPLENDENT_BLADE = ITEMS.register("resplendent_blade",
+            () -> new Resplendent_Blade(DIAMOND, 10, 3f, new Item.Properties()));
     public static final RegistryObject<Item> OPERATION_LEAD_SEAL_DISC = ITEMS.register("operation_lead_seal_disc",
             () -> new RecordItem(
                     15,
