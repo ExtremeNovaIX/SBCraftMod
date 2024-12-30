@@ -30,5 +30,29 @@
 				"stream": true
 			}
 		]
+	},
+	"laser_cannon_in_hand": {
+		"sounds": [
+			{
+				"name": "sbmod:laser_cannon_in_hand",
+				"stream": true
+			}
+		]
+	},
+	"laser_cannon_shooting": {
+		"sounds": [
+			{
+				"name": "sbmod:laser_cannon_shooting",
+				"stream": true
+			}
+		]
+	},
+	"thunder_rod_charge": {
+		"sounds": [
+			{
+				"name": "sbmod:thunder_rod_charge",
+				"stream": false
+			}
+		]
 	}
 }

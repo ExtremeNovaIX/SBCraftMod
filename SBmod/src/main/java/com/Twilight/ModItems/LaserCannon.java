@@ -1,7 +1,12 @@
 package com.Twilight.ModItems;
 
+import com.Twilight.ModSounds.ModSounds;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
@@ -19,8 +24,13 @@ public class LaserCannon extends Item {
     public LaserCannon(Item.Properties properties) {
         super(properties);
     }
-
+    private SoundInstance shootingSoundInstance;
+    @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        level.playSound(null, player.getX(), player.getY(), player.getZ(),
+                ModSounds.LASER_CANNON_IN_HAND.get(),
+                SoundSource.NEUTRAL, 1.0F, 1.0F);
+
         Vec3 lookVec = player.getLookAngle();
 
         int distance = 60;
@@ -53,4 +63,5 @@ public class LaserCannon extends Item {
 
         return super.use(level, player, hand);
     }
+
 }

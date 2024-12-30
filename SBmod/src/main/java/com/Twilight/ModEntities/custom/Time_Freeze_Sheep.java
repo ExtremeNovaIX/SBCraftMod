@@ -87,9 +87,9 @@ public class Time_Freeze_Sheep extends SheepOri implements IThrowerAware {
                 setNoGravity(true);
                 this.setDeltaMovement(0, 0, 0);
                 if (isFreezingTime && !this.level().isClientSide) {
-                    this.level().playSound(null, this.getX(), this.getY(), this.getZ(),
-                            ModSounds.TIME_FREEZE.get(),
-                            SoundSource.NEUTRAL, 4.0F, 1.0F);
+                        this.level().playSound(null, this.getX(), this.getY(), this.getZ(),
+                                ModSounds.TIME_FREEZE.get(),
+                                SoundSource.NEUTRAL, 1.0F, 1.0F);
                 }
             }
         } else {

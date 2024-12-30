@@ -29,7 +29,7 @@ public class ThunderRod extends Item {
     // 添加物品描述
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("item.sbmod.thunder_rod.desc").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("item.sbmod.thunder_rod.desc").withStyle(ChatFormatting.GOLD));
         super.appendHoverText(stack, level, tooltip, flag);
     }
 
