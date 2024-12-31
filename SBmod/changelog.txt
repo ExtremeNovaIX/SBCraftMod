@@ -105,7 +105,7 @@
  - 47.1.14 Make item name rendering and status bar rendering respect additional gui overlays being rendered by mods (#9648)
  - 47.1.13 Fix EyeHeight event being fired twice (#9647)
  - 47.1.12 Add PlayerSpawnPhantomsEvent, utilized to block or forcefully allow PhantomSpawner to spawn phantoms (#9644)
- - 47.1.11 Fix creative mode screen not correctly using CreativeModeTab::getTabsImage (#9627)
+ - 47.1.11 Fix creative swordMode screen not correctly using CreativeModeTab::getTabsImage (#9627)
  - 47.1.10 Add option to advertise dedicated servers to LAN.
  - 47.1.9  Fix entity eye height loop.
  - 47.1.8  Particle Description Data Provider.
@@ -197,7 +197,7 @@
  - 46.0.1  Attempt to fix jar signing
            Gradle 8 is stupid and doesn't (easily) allow in-place tasks, so a temporary fix has been made in ForgeGradle 6
  - 46.0.0  Forge 1.20
-           - Creative mode tabs are now a registry; the `BuildContents` event was renamed to `BuildCreativeModeTabContentsEvent` and moved it to its own class
+           - Creative swordMode tabs are now a registry; the `BuildContents` event was renamed to `BuildCreativeModeTabContentsEvent` and moved it to its own class
            - The pack format is now 15 for both resource packs and data packs
            - `ScreenUtils` was deprecated in favor of a `GuiGraphics` extension
            - Forge and the MDK were updated to Gradle 8 and FG6
@@ -406,7 +406,7 @@
  - 44.0.2  Fix merged mod resource pack not returning all resources with the same name when asked. Closes #9194
  - 44.0.1  Fix searching using the wrong prefix for items or tags. Fixes #9176 Fixes #9179 (#9177)
  - 44.0.0  Forge 1.19.3
-           Created a CreativeModeTabEvent to register creative mode tabs and populate entries per tab
+           Created a CreativeModeTabEvent to register creative swordMode tabs and populate entries per tab
            Moved datapack registries to DataPackRegistryEvent.NewRegistry event instead of tying them to ForgeRegistry
            Made it easier for mods to datagen datapack builtin entries with DatapackBuiltinEntriesProvider
            Provided access to lookupProvider for datagen

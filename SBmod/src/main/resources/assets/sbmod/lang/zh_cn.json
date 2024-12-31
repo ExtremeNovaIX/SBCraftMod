@@ -17,6 +17,7 @@
   "key.sbmod.shit": "喷史",
   "item.sbmod.thunder_rod": "雷霆法杖",
   "item.sbmod.thunder_rod.desc": "上古神器，役雷御电。握之可呼风唤雨，御天地之威。",
-  "item.sbmod.resplendent_blade": "灿焰长刃",
-  "item.sbmod.resplendent_blade.desc": "手执威光，便是为了扫净世间恶行。"
+  "item.sbmod.resplendent_blade": "§6灿焰长刃",
+  "item.sbmod.resplendent_blade.desc": "手执威光，便是为了扫净世间恶行。",
+  "item.sbmod.resplendent_blade_mode_swichkey": "灿焰长刃模式切换"
 }

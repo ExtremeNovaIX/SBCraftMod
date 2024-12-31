@@ -16,6 +16,7 @@ public class ClientEvents {
     @SubscribeEvent
         public static void onKeyRegister(RegisterKeyMappingsEvent event) {
             event.register(KeyBindings.INSTANCE.SHIT_KEY);
+            event.register(KeyBindings.INSTANCE.RESPLENDENT_BLADE_MODE_SWICHKEY);
     }
     @SubscribeEvent
     public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event){

@@ -14,6 +14,10 @@ public class KeyBindings {
             KeyConflictContext.IN_GAME,
             InputConstants.getKey(InputConstants.KEY_C,-1), CATEGORY
     );
+    public KeyMapping RESPLENDENT_BLADE_MODE_SWICHKEY = new KeyMapping("key.sbmod.resplendent_blade_mode_swichkey",
+            KeyConflictContext.IN_GAME,
+            InputConstants.getKey(InputConstants.KEY_R,-1), CATEGORY
+    );
 
 
 }
