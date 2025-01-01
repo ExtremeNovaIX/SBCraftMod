@@ -18,6 +18,4 @@ public class KeyBindings {
             KeyConflictContext.IN_GAME,
             InputConstants.getKey(InputConstants.KEY_R,-1), CATEGORY
     );
-
-
 }
