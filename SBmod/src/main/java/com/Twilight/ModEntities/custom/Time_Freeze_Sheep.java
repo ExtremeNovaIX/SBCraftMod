@@ -288,6 +288,9 @@ public class Time_Freeze_Sheep extends SheepOri implements IThrowerAware {
                 break;
         }
     }
+    public boolean isAttackable() {
+        return false;
+    }
 }
 
 
