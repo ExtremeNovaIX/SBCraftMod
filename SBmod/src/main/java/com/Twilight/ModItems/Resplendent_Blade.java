@@ -6,17 +6,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
@@ -24,13 +19,13 @@ import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Random;
 
 @Mod.EventBusSubscriber
 public class Resplendent_Blade extends SwordItem {
     public static boolean isDashingingTime = false;
     public static int DashingTimer = 0;
     public static int DashingTime = 40;//在这里设置冲刺时间(tick)
+
     // 添加物品描述
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
@@ -108,7 +103,7 @@ public class Resplendent_Blade extends SwordItem {
             // 播放声音
             level.playSound(null, player.getX(), player.getY(), player.getZ(),
                     ModSounds.RESPLENDENT_BLADE_DASHING.get(),
-                    SoundSource.PLAYERS, 0.5F, 1.0F);
+                    SoundSource.PLAYERS, 10F, 1.0F);
 
             double maxSpeed = 5.0; // 最大速度
             Vec3 lookVec = player.getLookAngle();
@@ -122,8 +117,6 @@ public class Resplendent_Blade extends SwordItem {
             }
             isDashingingTime = true;
             DashingTimer = 0;
-        }else{
-            player.playSound(ModSounds.RESPLENDENT_BLADE_DASHING.get(), 3F, 1F);
         }
     }
 
@@ -144,4 +137,22 @@ public class Resplendent_Blade extends SwordItem {
             }
         }
     }
+
+    public static void hurtEnemyInBlade(Player player) {
+        Level level = player.level();
+        if (!level.isClientSide) { // 服务端逻辑
+            // 检测周围生物并造成伤害
+            double range = 9.0; // 检测范围，单位是方块
+            List<LivingEntity> nearbyEntities = level.getEntitiesOfClass(LivingEntity.class,
+                    new AABB(player.getX() - range, player.getY() - range, player.getZ() - range,
+                            player.getX() + range, player.getY() + range, player.getZ() + range));
+            for (LivingEntity entity : nearbyEntities) {
+                    // 对周围生物造成伤害
+                    LivingEntity livingEntity = (LivingEntity) entity;
+                    livingEntity.hurt(level.damageSources().magic(), 40f);
+            }
+        }
+    }
+
 }
+
