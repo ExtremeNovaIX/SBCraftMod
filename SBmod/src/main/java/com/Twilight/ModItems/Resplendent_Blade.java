@@ -148,11 +148,14 @@ public class Resplendent_Blade extends SwordItem {
                             player.getX() + range, player.getY() + range, player.getZ() + range));
             for (LivingEntity entity : nearbyEntities) {
                     // 对周围生物造成伤害
+                if (entity != player) {
                     LivingEntity livingEntity = (LivingEntity) entity;
                     livingEntity.hurt(level.damageSources().magic(), 40f);
+                }
             }
         }
     }
 
+    
 }
 
