@@ -1,8 +1,10 @@
 package com.Twilight.ModEntities;
 
 import com.Twilight.ModEntities.custom.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -23,6 +25,13 @@ public class ModEntities {
     public static final RegistryObject<EntityType<Time_Freeze_Sheep>> TIME_FREEZE_SHEEP =
             ENTITIY_TYPES.register("time_freeze_sheep", () -> EntityType.Builder.of(Time_Freeze_Sheep::new, MobCategory.CREATURE)
                     .sized(1.7f, 0.9f).build("time_freeze_sheep"));
+    public static final RegistryObject<EntityType<LaserEntity>> LASER_ENTITY =
+            ENTITIY_TYPES.register("laser_entity",
+            () -> EntityType.Builder.of((EntityType<LaserEntity> entityType, Level level) -> new LaserEntity(entityType, level), MobCategory.MISC)
+                    .sized(0.5F, 0.5F) // 设置实体的大小
+                    .clientTrackingRange(32) // 设置客户端追踪范围
+                    .updateInterval(20) // 设置更新间隔
+                    .build("laser_entity"));
 
 
     public static void register(IEventBus eventBus) {

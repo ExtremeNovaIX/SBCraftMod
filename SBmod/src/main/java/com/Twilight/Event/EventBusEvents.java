@@ -1,6 +1,7 @@
 package com.Twilight.Event;
 
 import com.Twilight.ModEntities.ModEntities;
+import com.Twilight.ModEntities.client.LaserRenderer;
 import com.Twilight.ModEntities.custom.SheepOri;
 import com.Twilight.ModEntities.custom.Twilight_Builder;
 import com.Twilight.SBMod.Main;

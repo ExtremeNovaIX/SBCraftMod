@@ -1,7 +1,7 @@
 package com.Twilight.SBMod;
 
 import com.Twilight.ModEntities.ModEntities;
-import com.Twilight.ModEntities.client.SheepRenderer;
+import com.Twilight.ModEntities.client.*;
 import com.Twilight.ModEntities.custom.Time_Freeze_Sheep;
 import com.Twilight.ModSounds.ModSounds;
 import com.Twilight.Packet.CustomPacket;
@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -60,6 +61,7 @@ public class Main {
             EntityRenderers.register(ModEntities.EXPLOSION_SHEEP_RED.get(), SheepRenderer::new);
             EntityRenderers.register(ModEntities.EXPLOSION_SHEEP_BLACK.get(), SheepRenderer::new);
             EntityRenderers.register(ModEntities.TIME_FREEZE_SHEEP.get(), SheepRenderer::new);
+            EntityRenderers.register(ModEntities.LASER_ENTITY.get(), LaserRenderer::new);
         }
     }
      //Create Creative Mode Tab
@@ -95,5 +97,4 @@ public class Main {
         ModSounds.register(modEventBus);
         init();
     }
-
 }
