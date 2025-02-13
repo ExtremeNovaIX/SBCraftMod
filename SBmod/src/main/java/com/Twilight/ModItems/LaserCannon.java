@@ -28,8 +28,7 @@ public class LaserCannon extends Item {
 
     public void spawnLaser(Level level, Player player) {
         if (!level.isClientSide) { // 确保只在服务端生成实体
-            Vec3 start = player.getEyePosition(1.0f)
-                    .subtract(0, player.getEyeHeight() * 0.2, 0);;
+            Vec3 start = player.getEyePosition(1.0F);
             Vec3 end = start.add(player.getLookAngle().scale(50));
             LaserEntity laser = new LaserEntity(level, start, end);
             level.addFreshEntity(laser);

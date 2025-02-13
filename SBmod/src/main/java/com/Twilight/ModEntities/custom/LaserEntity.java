@@ -17,14 +17,11 @@ public class LaserEntity extends Entity {
             SynchedEntityData.defineId(LaserEntity.class, EntityDataSerializers.VECTOR3);
     private static final EntityDataAccessor<Vector3f> END =
             SynchedEntityData.defineId(LaserEntity.class, EntityDataSerializers.VECTOR3);
-    private static final EntityDataAccessor<Integer> COLOR =
-            SynchedEntityData.defineId(LaserEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Float> WIDTH =
-            SynchedEntityData.defineId(LaserEntity.class, EntityDataSerializers.FLOAT);
 
-    // 配置参数
-    private int age = 0;
-    private final int maxAge = 20; // 存活时间（20 tick = 1秒）
+    public int age = 0;
+    public final int maxAge = 20; // 存活时间（20 tick = 1秒）
+    private float width = 0.5f;
+    private int color = 0x800080; // ARGB格式颜色（紫色）
 
     public LaserEntity(EntityType<?> type, Level level) {
         super(type, level);
@@ -32,54 +29,29 @@ public class LaserEntity extends Entity {
         this.setInvulnerable(true);
     }
 
-    // 完整构造方法
-    public LaserEntity(Level level, Vec3 start, Vec3 end, int color, float width) {
-        this(ModEntities.LASER_ENTITY.get(), level);
-        this.setBeamPositions(start, end);
-        this.setColor(color);
-        this.setWidth(width);
-        this.setPos(start.x, start.y, start.z);
-    }
-
-    // 简化构造方法
     public LaserEntity(Level level, Vec3 start, Vec3 end) {
-        this(level, start, end, 0xCC88FFFF, 0.5f);
+        this(ModEntities.LASER_ENTITY.get(), level);
+        setBeamPositions(start, end);
+        this.setPos(start.x, start.y, start.z);
     }
 
     @Override
     protected void defineSynchedData() {
         this.entityData.define(START, new Vector3f());
         this.entityData.define(END, new Vector3f());
-        this.entityData.define(COLOR, 0xCC88FFFF); // 默认淡紫色（ARGB）
-        this.entityData.define(WIDTH, 0.5f);
     }
 
-    // 光束位置控制
+    // 设置光束位置（服务端调用）
     public void setBeamPositions(Vec3 start, Vec3 end) {
         this.entityData.set(START, vec3ToVector(start));
         this.entityData.set(END, vec3ToVector(end));
     }
 
-    // 颜色控制（ARGB格式）
-    public void setColor(int argbColor) {
-        this.entityData.set(COLOR, argbColor);
-    }
-    public int getColor() {
-        return this.entityData.get(COLOR);
-    }
-
-    // 宽度控制
-    public void setWidth(float width) {
-        this.entityData.set(WIDTH, width);
-    }
-    public float getWidth() {
-        return this.entityData.get(WIDTH);
-    }
-
-    // 坐标获取
+    // 获取坐标（自动转换类型）
     public Vec3 getStart() {
         return vectorToVec3(this.entityData.get(START));
     }
+
     public Vec3 getEnd() {
         return vectorToVec3(this.entityData.get(END));
     }
@@ -88,6 +60,7 @@ public class LaserEntity extends Entity {
     private Vector3f vec3ToVector(Vec3 vec) {
         return new Vector3f((float)vec.x, (float)vec.y, (float)vec.z);
     }
+
     private Vec3 vectorToVec3(Vector3f vec) {
         return new Vec3(vec.x(), vec.y(), vec.z());
     }
@@ -100,35 +73,30 @@ public class LaserEntity extends Entity {
         }
     }
 
-    // 持久化存储
+    // 序列化方法
     @Override
     protected void readAdditionalSaveData(CompoundTag tag) {
         this.age = tag.getInt("Age");
-        this.setColor(tag.getInt("Color"));
-        this.setWidth(tag.getFloat("Width"));
-        this.setBeamPositions(new Vec3(
+        this.entityData.set(START, vec3ToVector(new Vec3(
                 tag.getDouble("StartX"),
                 tag.getDouble("StartY"),
                 tag.getDouble("StartZ")
-        ), new Vec3(
+        )));
+        this.entityData.set(END, vec3ToVector(new Vec3(
                 tag.getDouble("EndX"),
                 tag.getDouble("EndY"),
                 tag.getDouble("EndZ")
-        ));
+        )));
     }
 
     @Override
     protected void addAdditionalSaveData(CompoundTag tag) {
         tag.putInt("Age", this.age);
-        tag.putInt("Color", this.getColor());
-        tag.putFloat("Width", this.getWidth());
-
-        Vec3 start = this.getStart();
+        Vec3 start = getStart();
         tag.putDouble("StartX", start.x);
         tag.putDouble("StartY", start.y);
         tag.putDouble("StartZ", start.z);
-
-        Vec3 end = this.getEnd();
+        Vec3 end = getEnd();
         tag.putDouble("EndX", end.x);
         tag.putDouble("EndY", end.y);
         tag.putDouble("EndZ", end.z);
@@ -137,5 +105,14 @@ public class LaserEntity extends Entity {
     @Override
     public boolean shouldRenderAtSqrDistance(double distance) {
         return true; // 强制渲染
+    }
+
+    // Getter方法
+    public float getWidth() {
+        return width;
+    }
+
+    public int getColor() {
+        return color;
     }
 }

@@ -64,7 +64,6 @@ public class Main {
             EntityRenderers.register(ModEntities.LASER_ENTITY.get(), LaserRenderer::new);
         }
     }
-    //player.sendSystemMessage(Component.literal("生成激光实体于: " + start + " 到 " + end));
      //Create Creative Mode Tab
     public static final RegistryObject<CreativeModeTab> SBMOD_TAB = CREATIVE_MODE_TABS.register("sbmod_tab",
             () -> CreativeModeTab.builder()
