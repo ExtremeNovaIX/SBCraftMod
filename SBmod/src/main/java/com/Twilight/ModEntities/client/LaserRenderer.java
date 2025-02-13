@@ -14,6 +14,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
+import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 public class LaserRenderer extends EntityRenderer<LaserEntity> {
@@ -49,16 +50,24 @@ public class LaserRenderer extends EntityRenderer<LaserEntity> {
         poseStack.pushPose();
         VertexConsumer vertexBuilder = buffer.getBuffer(BEAM_RENDER_TYPE);
 
-        // 计算旋转角度
-        Vec3 normalizedDir = direction.normalize();
-        float yaw = (float)Math.toDegrees(Math.atan2(normalizedDir.z, normalizedDir.x)) - 90.0F;
-        float pitch = (float)Math.toDegrees(Math.asin(normalizedDir.y));
+        // 新增加的坐标平移
+        Vec3 cameraPos = this.entityRenderDispatcher.camera.getPosition();
+        poseStack.translate(
+                start.x - cameraPos.x,
+                start.y - cameraPos.y,
+                start.z - cameraPos.z
+        );
 
-        // 调整姿态矩阵
-        poseStack.mulPose(com.mojang.math.Axis.YP.rotationDegrees(-yaw));
-        poseStack.mulPose(com.mojang.math.Axis.XP.rotationDegrees(pitch));
+        // 替换原来的旋转计算
+        Vector3f lookVec = new Vector3f((float)direction.x, (float)direction.y, (float)direction.z);
+        Quaternionf rotation = new Quaternionf().rotationTo(new Vector3f(0, 1, 0), lookVec.normalize());
+        poseStack.mulPose(rotation);
 
-        // 核心渲染逻辑（参考信标）
+        // 增加缩放补偿（可选）
+        float scaleFactor = 0.8f; // 根据实际效果调整
+        poseStack.scale(scaleFactor, scaleFactor, scaleFactor);
+
+        // 核心渲染逻辑
         renderBeam(poseStack, vertexBuilder, gameTime, partialTicks,
                 progress, length, rgb, packedLight);
 
@@ -68,61 +77,82 @@ public class LaserRenderer extends EntityRenderer<LaserEntity> {
     private void renderBeam(PoseStack poseStack, VertexConsumer builder,
                             long gameTime, float partialTicks, float progress,
                             float length, float[] rgb, int packedLight) {
-        float textureScale = 0.2F; // 纹理缩放系数
-        float alpha = 1.0F - progress; // 根据生命周期计算透明度
+        float alpha = 1.0F - progress;
 
-        // 计算动画参数
-        float offset = -gameTime * 0.2F - Mth.floor(partialTicks * 0.1F);
-        float scaleY = length * textureScale;
-        float minU = offset * 0.5F;
-        float maxU = minU + scaleY;
+        // 核心层参数
+        renderCylinder(poseStack.last(), builder,
+                length, 0.1f, alpha * 0.8f,
+                16, packedLight);
 
-        Matrix4f matrix = poseStack.last().pose();
-        Matrix3f normalMatrix = poseStack.last().normal();
-
-        // 构建光束立方体
-        addQuad(matrix, normalMatrix, builder,
-                rgb[0], rgb[1], rgb[2], alpha * 0.8F,
-                0.0F, length, -0.1F, -0.1F, minU, maxU,
-                packedLight);
-        addQuad(matrix, normalMatrix, builder,
-                rgb[0], rgb[1], rgb[2], alpha,
-                0.0F, length, -0.2F, -0.2F, minU, maxU,
-                packedLight);
+        // 辉光层参数
+        renderCylinder(poseStack.last(), builder,
+                length, 0.2f, alpha * 0.3f,
+                32, packedLight);
     }
 
-    private void addQuad(Matrix4f matrix, Matrix3f normalMatrix, VertexConsumer builder,
-                         float r, float g, float b, float a,
-                         float yOffset, float height, float width, float zOffset,
-                         float minU, float maxU, int packedLight) {
-        // 前侧
-        builder.vertex(matrix, -width, yOffset + height, zOffset)
-                .color(r, g, b, a)
-                .uv(minU, 0.0F)
+    private void renderCylinder(PoseStack.Pose pose, VertexConsumer builder,
+                                float length, float radius, float alpha,
+                                int segments, int packedLight) {
+        Matrix4f matrix = pose.pose();
+        Matrix3f normalMatrix = pose.normal();
+
+        for (int i = 0; i < segments; i++) {
+            float angle1 = (float) (Math.PI * 2 * i / segments);
+            float angle2 = (float) (Math.PI * 2 * (i+1) / segments);
+
+            Vector3f v1 = new Vector3f(
+                    radius * Mth.cos(angle1),
+                    0,
+                    radius * Mth.sin(angle1)
+            );
+
+            Vector3f v2 = new Vector3f(
+                    radius * Mth.cos(angle2),
+                    0,
+                    radius * Mth.sin(angle2)
+            );
+
+            // 生成四边形侧面
+            addCylinderQuad(matrix, normalMatrix, builder,
+                    v1, v2, length, alpha, packedLight);
+        }
+    }
+
+    private void addCylinderQuad(Matrix4f matrix, Matrix3f normalMatrix, VertexConsumer builder,
+                                 Vector3f v1, Vector3f v2, float length,
+                                 float alpha, int packedLight) {
+        // 顶部顶点
+        builder.vertex(matrix, v1.x, length, v1.z)
+                .color(1, 1, 1, alpha)
+                .uv(0, 0)
                 .overlayCoords(OverlayTexture.NO_OVERLAY)
                 .uv2(packedLight)
-                .normal(normalMatrix, 0.0F, 1.0F, 0.0F)
+                .normal(normalMatrix, v1.x, 0, v1.z)
                 .endVertex();
-        builder.vertex(matrix, width, yOffset + height, zOffset)
-                .color(r, g, b, a)
-                .uv(maxU, 0.0F)
+
+        builder.vertex(matrix, v2.x, length, v2.z)
+                .color(1, 1, 1, alpha)
+                .uv(1, 0)
                 .overlayCoords(OverlayTexture.NO_OVERLAY)
                 .uv2(packedLight)
-                .normal(normalMatrix, 0.0F, 1.0F, 0.0F)
+                .normal(normalMatrix, v2.x, 0, v2.z)
                 .endVertex();
-        builder.vertex(matrix, width, yOffset, zOffset)
-                .color(r, g, b, a)
-                .uv(maxU, 1.0F)
+
+        // 底部顶点
+        builder.vertex(matrix, v2.x, 0, v2.z)
+                .color(1, 1, 1, alpha)
+                .uv(1, 1)
                 .overlayCoords(OverlayTexture.NO_OVERLAY)
                 .uv2(packedLight)
-                .normal(normalMatrix, 0.0F, 1.0F, 0.0F)
+                .normal(normalMatrix, v2.x, 0, v2.z)
                 .endVertex();
-        builder.vertex(matrix, -width, yOffset, zOffset)
-                .color(r, g, b, a)
-                .uv(minU, 1.0F)
+
+        builder.vertex(matrix, v1.x, 0, v1.z)
+                .color(1, 1, 1, alpha)
+                .uv(0, 1)
                 .overlayCoords(OverlayTexture.NO_OVERLAY)
                 .uv2(packedLight)
-                .normal(normalMatrix, 0.0F, 1.0F, 0.0F)
+                .normal(normalMatrix, v1.x, 0, v1.z)
                 .endVertex();
     }
 
