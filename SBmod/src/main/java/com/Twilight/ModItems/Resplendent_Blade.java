@@ -103,6 +103,7 @@ public class Resplendent_Blade extends SwordItem {
 
     public static void Dashing(Player player, Level level) {
         if (!level.isClientSide) {
+            // 播放声音
             level.playSound(null, player.getX(), player.getY(), player.getZ(),
                     ModSounds.RESPLENDENT_BLADE_DASHING.get(),
                     SoundSource.PLAYERS, 10F, 1.0F);
@@ -151,7 +152,7 @@ public class Resplendent_Blade extends SwordItem {
             for (LivingEntity entity : nearbyEntities) {
                 // 对周围生物造成伤害
                 if (entity != player) {
-                    entity.hurt(level.damageSources().magic(), 100f);
+                    entity.hurt(level.damageSources().magic(), 40f);
                 }
             }
         }
