@@ -13,12 +13,15 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.*;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Objects;
 
 @Mod.EventBusSubscriber
 public class Resplendent_Blade extends SwordItem {
@@ -71,7 +74,7 @@ public class Resplendent_Blade extends SwordItem {
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity attacker, LivingEntity target) {
         Level level = attacker.level();
-        if (!level.isClientSide) { // 服务端逻辑
+        if (!level.isClientSide) {
             switch (swordMode) {
                 case DEFENDING:
                 case NORMAL:
@@ -101,18 +104,19 @@ public class Resplendent_Blade extends SwordItem {
 
     public static void Dashing(Player player, Level level) {
         if (!level.isClientSide) {
-            // 播放声音
             level.playSound(null, player.getX(), player.getY(), player.getZ(),
                     ModSounds.RESPLENDENT_BLADE_DASHING.get(),
                     SoundSource.PLAYERS, 10F, 1.0F);
+
+            player.setBoundingBox(new AABB(0, 0, 0, 0, 0, 0));
+            player.refreshDimensions();
 
             double maxSpeed = 5.0; // 最大速度
             Vec3 lookVec = player.getLookAngle();
             Vec3 direction = lookVec.normalize().scale(maxSpeed);
 
             // 对于玩家，使用网络包来设置移动
-            if (player instanceof ServerPlayer) {
-                ServerPlayer serverPlayer = (ServerPlayer) player;
+            if (player instanceof ServerPlayer serverPlayer) {
                 Vec3 newMotion = serverPlayer.getDeltaMovement().add(direction);
                 serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(serverPlayer.getId(), newMotion));
             }
@@ -122,16 +126,19 @@ public class Resplendent_Blade extends SwordItem {
     }
 
     public static void breakBlocks(Player player, Level level) {
-        double range = 7.0; // 检测范围，单位是方块
-        for (int x = (int) (Math.floor(player.getX()) - range); x < Math.floor(player.getX()) + range; x++) {
-            for (int y = (int) (Math.floor(player.getY()) - range); y < Math.floor(player.getY()) + range; y++) {
-                for (int z = (int) (Math.floor(player.getZ()) - range); z < Math.floor(player.getZ()) + range; z++) {
-                    BlockPos pos = new BlockPos(x, y, z);
-                    // 计算当前位置与玩家位置之间的距离，如果小于等于范围，则破坏方块
-                    if (Math.sqrt(Math.pow(x - player.getX(), 2) + Math.pow(y - player.getY(), 2) + Math.pow(z - player.getZ(), 2)) <= range) {
-                        BlockState state = level.getBlockState(pos);
-                        if (!state.isAir()) { // 检查方块是否为空
-                            level.removeBlock(pos, false); // 破坏方块
+        double range = 7.0;
+        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+        for (double x = player.getX() - range; x <= player.getX() + range; x++) {
+            for (double y = player.getY() - range; y <= player.getY() + range; y++) {
+                for (double z = player.getZ() - range; z <= player.getZ() + range; z++) {
+                    pos.set(x, y, z);
+                    BlockState state = level.getBlockState(pos);
+                    // 检查方块是否在范围内且非空气
+                    if (player.distanceToSqr(x, y, z) <= range * range && !state.isAir()) {
+                        // 在服务器端移除方块并发送更新
+                        if (!level.isClientSide) {
+                            level.removeBlock(pos, true);
+                            //level.sendBlockUpdated(pos, Blocks.AIR.defaultBlockState(), state, 7);
                         }
                     }
                 }
@@ -150,14 +157,10 @@ public class Resplendent_Blade extends SwordItem {
             for (LivingEntity entity : nearbyEntities) {
                 // 对周围生物造成伤害
                 if (entity != player) {
-                    LivingEntity livingEntity = (LivingEntity) entity;
-                    livingEntity.hurt(level.damageSources().magic(), 40f);
+                    entity.hurt(level.damageSources().magic(), 100f);
                 }
-                
             }
         }
     }
-
-
 }
 
