@@ -1,5 +1,7 @@
-package com.Twilight.ModEntities.client;
+package com.Twilight.ModEntities.client.Entityrenderer;
 
+import com.Twilight.ModEntities.client.EntityLayers.ModModelLayers;
+import com.Twilight.ModEntities.client.EntityModel.Twilight_BuilderModel;
 import com.Twilight.ModEntities.custom.Twilight_Builder;
 import com.Twilight.SBMod.Main;
 import com.mojang.blaze3d.vertex.PoseStack;

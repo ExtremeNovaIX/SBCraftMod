@@ -1,4 +1,4 @@
-package com.Twilight.ModEntities.client;
+package com.Twilight.ModEntities.client.Entityrenderer;
 
 import com.Twilight.ModEntities.custom.LaserEntity;
 import com.Twilight.SBMod.Main;

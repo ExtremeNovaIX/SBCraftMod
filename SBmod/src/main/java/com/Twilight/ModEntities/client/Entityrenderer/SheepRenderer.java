@@ -1,7 +1,10 @@
 // FILEPATH: E:/SBCraft-mod/SBmod/src/main/java/com/Twilight/ModEntities/client/Explosion_SheepRenderer.java
 
-package com.Twilight.ModEntities.client;
+package com.Twilight.ModEntities.client.Entityrenderer;
 
+import com.Twilight.ModEntities.client.EntityLayers.Explosion_Sheep_WoolLayer;
+import com.Twilight.ModEntities.client.EntityLayers.ModModelLayers;
+import com.Twilight.ModEntities.client.EntityModel.Explosion_SheepModel;
 import com.Twilight.ModEntities.custom.SheepOri;
 import com.Twilight.SBMod.Main;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

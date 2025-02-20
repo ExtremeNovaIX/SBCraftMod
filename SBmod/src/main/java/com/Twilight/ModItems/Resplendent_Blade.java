@@ -26,6 +26,7 @@ public class Resplendent_Blade extends SwordItem {
     public static int DashingTimer = 0;
     public static int DashingTime = 40;//在这里设置冲刺时间(tick)
 
+
     // 添加物品描述
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {

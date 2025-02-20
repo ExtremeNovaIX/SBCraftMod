@@ -1,4 +1,4 @@
-package com.Twilight.ModEntities.client;
+package com.Twilight.ModEntities.client.EntityModel;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

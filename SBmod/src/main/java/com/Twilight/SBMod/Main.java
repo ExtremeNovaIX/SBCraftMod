@@ -1,19 +1,25 @@
 package com.Twilight.SBMod;
 
+import com.Twilight.Client.KeyBindings;
 import com.Twilight.ModEntities.ModEntities;
-import com.Twilight.ModEntities.client.*;
-import com.Twilight.ModEntities.custom.Time_Freeze_Sheep;
+import com.Twilight.ModEntities.client.EntityLayers.ModModelLayers;
+import com.Twilight.ModEntities.client.EntityModel.Twilight_BuilderModel;
+import com.Twilight.ModEntities.client.Entityrenderer.LaserRenderer;
+import com.Twilight.ModEntities.client.EntityModel.Explosion_SheepModel;
+import com.Twilight.ModEntities.client.EntityModel.Explosion_Sheep_WoolModel;
+import com.Twilight.ModEntities.client.Entityrenderer.SheepRenderer;
 import com.Twilight.ModSounds.ModSounds;
 import com.Twilight.Packet.CustomPacket;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -24,7 +30,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
-import com.Twilight.ModEntities.client.Twilight_BuilderRenderer;
+import com.Twilight.ModEntities.client.Entityrenderer.Twilight_BuilderRenderer;
 import static com.Twilight.ModBlock.ModBLock.BLOCKS;
 import static com.Twilight.ModItems.ModItems.*;
 
@@ -37,6 +43,7 @@ public class Main {
     private void registerCommonEvents(IEventBus modEventBus) {
         ModEntities.ENTITIY_TYPES.register(modEventBus);
     }
+    //网络包初始化
     public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(
             new ResourceLocation(MOD_ID, "main"),
             () -> "1.0",
@@ -44,17 +51,13 @@ public class Main {
             s -> true
     );
     public static void init() {
-        // ... 其他初始化代码 ...
-
         int id = 0;
         PACKET_HANDLER.registerMessage(id++, CustomPacket.class, CustomPacket::encode, CustomPacket::decode, CustomPacket::handle);
     }
-    @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event) {
 
-    }
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD,value = Dist.CLIENT)
     public static class ClientEvents {
+        //注册实体渲染
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntities.TWILIGHT_BUILDER.get(), Twilight_BuilderRenderer::new);
@@ -63,8 +66,29 @@ public class Main {
             EntityRenderers.register(ModEntities.TIME_FREEZE_SHEEP.get(), SheepRenderer::new);
             EntityRenderers.register(ModEntities.LASER_ENTITY.get(), LaserRenderer::new);
         }
+        // 注册自定义物品渲染
+        @SubscribeEvent
+        public static void registerCustomItemRenderers(EntityRenderersEvent.RegisterRenderers event) {
+            ItemProperties.register(RESPLENDENT_BLADE.get(),
+                    new ResourceLocation("pulse_effect"),
+                    (stack, level, entity, seed) -> 1.0F
+            );
+        }
+        //注册按键
+        @SubscribeEvent
+        public static void onKeyRegister(RegisterKeyMappingsEvent event) {
+            event.register(KeyBindings.INSTANCE.SHIT_KEY);
+            event.register(KeyBindings.INSTANCE.RESPLENDENT_BLADE_MODE_SWICHKEY);
+        }
+        //注册实体层
+        @SubscribeEvent
+        public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event){
+            event.registerLayerDefinition(ModModelLayers.TWILIGHT_BUILDER_LAYER, Twilight_BuilderModel::createBodyLayer);
+            event.registerLayerDefinition(ModModelLayers.EXPLOSION_SHEEP_WOOL_LAYER, Explosion_Sheep_WoolModel::createBodyLayer);
+            event.registerLayerDefinition(ModModelLayers.EXPLOSION_SHEEP_LAYER, Explosion_SheepModel::createBodyLayer);
+        }
     }
-     //Create Creative Mode Tab
+     //创造模式物品栏
     public static final RegistryObject<CreativeModeTab> SBMOD_TAB = CREATIVE_MODE_TABS.register("sbmod_tab",
             () -> CreativeModeTab.builder()
             .icon(() -> new ItemStack(HEAD_K2536_BLOCK_ITEM.get()))

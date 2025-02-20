@@ -1,4 +1,4 @@
-package com.Twilight.ModEntities.client;
+package com.Twilight.ModEntities.client.EntityLayers;
 
 import com.Twilight.SBMod.Main;
 import net.minecraft.client.model.geom.ModelLayerLocation;
