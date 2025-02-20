@@ -7,9 +7,7 @@ import com.Twilight.ModEntities.client.EntityModel.Twilight_BuilderModel;
 import com.Twilight.ModEntities.client.Entityrenderer.LaserRenderer;
 import com.Twilight.ModEntities.client.EntityModel.Explosion_SheepModel;
 import com.Twilight.ModEntities.client.EntityModel.Explosion_Sheep_WoolModel;
-import com.Twilight.ModEntities.client.Entityrenderer.Resplendent_BladeRenderer;
 import com.Twilight.ModEntities.client.Entityrenderer.SheepRenderer;
-import com.Twilight.ModEntities.custom.Resplendent_BladeEntity;
 import com.Twilight.ModSounds.ModSounds;
 import com.Twilight.Packet.CustomPacket;
 import com.mojang.logging.LogUtils;
@@ -67,7 +65,6 @@ public class Main {
             EntityRenderers.register(ModEntities.EXPLOSION_SHEEP_BLACK.get(), SheepRenderer::new);
             EntityRenderers.register(ModEntities.TIME_FREEZE_SHEEP.get(), SheepRenderer::new);
             EntityRenderers.register(ModEntities.LASER_ENTITY.get(), LaserRenderer::new);
-            EntityRenderers.register(ModEntities.RESPLENDENT_BLADE.get(), Resplendent_BladeRenderer::new);
         }
         // 注册自定义物品渲染
         @SubscribeEvent
@@ -89,7 +86,6 @@ public class Main {
             event.registerLayerDefinition(ModModelLayers.TWILIGHT_BUILDER_LAYER, Twilight_BuilderModel::createBodyLayer);
             event.registerLayerDefinition(ModModelLayers.EXPLOSION_SHEEP_WOOL_LAYER, Explosion_Sheep_WoolModel::createBodyLayer);
             event.registerLayerDefinition(ModModelLayers.EXPLOSION_SHEEP_LAYER, Explosion_SheepModel::createBodyLayer);
-
         }
     }
      //创造模式物品栏

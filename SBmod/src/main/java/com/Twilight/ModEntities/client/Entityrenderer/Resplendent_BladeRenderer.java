@@ -1,36 +1,23 @@
 package com.Twilight.ModEntities.client.Entityrenderer;
 
-import com.Twilight.ModEntities.custom.Resplendent_BladeEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-
 import static com.Twilight.ModItems.ModItems.RESPLENDENT_BLADE;
 
 @Mod.EventBusSubscriber(value = net.minecraftforge.api.distmarker.Dist.CLIENT)
-public class Resplendent_BladeRenderer extends ThrownItemRenderer<Resplendent_BladeEntity> {
-    public Resplendent_BladeRenderer(EntityRendererProvider.Context context) {
-        super(context);
-    }
+public class Resplendent_BladeRenderer {
     private static final int FULL_BRIGHT = LightTexture.pack(15, 15);
-    public static final ConcurrentHashMap<UUID, EntityDimensions> originalDimensions = new ConcurrentHashMap<>();
-    public static final EntityDimensions ZERO_DIMENSIONS = new EntityDimensions(0, 0, false);
-
 
     @SubscribeEvent
     public static void onRenderHand(RenderHandEvent event) {
