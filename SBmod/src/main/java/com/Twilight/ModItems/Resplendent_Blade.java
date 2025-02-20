@@ -15,7 +15,8 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.*;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nullable;
@@ -72,7 +73,7 @@ public class Resplendent_Blade extends SwordItem {
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity attacker, LivingEntity target) {
         Level level = attacker.level();
-        if (!level.isClientSide) { // 服务端逻辑
+        if (!level.isClientSide) {
             switch (swordMode) {
                 case DEFENDING:
                 case NORMAL:
@@ -102,7 +103,6 @@ public class Resplendent_Blade extends SwordItem {
 
     public static void Dashing(Player player, Level level) {
         if (!level.isClientSide) {
-            // 播放声音
             level.playSound(null, player.getX(), player.getY(), player.getZ(),
                     ModSounds.RESPLENDENT_BLADE_DASHING.get(),
                     SoundSource.PLAYERS, 10F, 1.0F);
@@ -112,8 +112,7 @@ public class Resplendent_Blade extends SwordItem {
             Vec3 direction = lookVec.normalize().scale(maxSpeed);
 
             // 对于玩家，使用网络包来设置移动
-            if (player instanceof ServerPlayer) {
-                ServerPlayer serverPlayer = (ServerPlayer) player;
+            if (player instanceof ServerPlayer serverPlayer) {
                 Vec3 newMotion = serverPlayer.getDeltaMovement().add(direction);
                 serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(serverPlayer.getId(), newMotion));
             }
@@ -152,14 +151,10 @@ public class Resplendent_Blade extends SwordItem {
             for (LivingEntity entity : nearbyEntities) {
                 // 对周围生物造成伤害
                 if (entity != player) {
-                    LivingEntity livingEntity = (LivingEntity) entity;
-                    livingEntity.hurt(level.damageSources().magic(), 40f);
+                    entity.hurt(level.damageSources().magic(), 100f);
                 }
-                
             }
         }
     }
-
-
 }
 
