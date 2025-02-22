@@ -1,5 +1,6 @@
 package com.Twilight.ModItems;
 
+import com.Twilight.Event.PlayerTickHandler;
 import com.Twilight.ModSounds.ModSounds;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -95,13 +96,14 @@ public class Resplendent_Blade extends SwordItem {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (this.swordMode == SwordMode.DASHING) {
-            Dashing(player, level);
+            Dashing(player);
             return InteractionResultHolder.success(stack);
         }
         return InteractionResultHolder.pass(stack);
     }
 
-    public static void Dashing(Player player, Level level) {
+    public static void Dashing(Player player) {
+        Level level = player.level();
         if (!level.isClientSide) {
             // 播放声音
             level.playSound(null, player.getX(), player.getY(), player.getZ(),
@@ -112,6 +114,9 @@ public class Resplendent_Blade extends SwordItem {
             Vec3 lookVec = player.getLookAngle();
             Vec3 direction = lookVec.normalize().scale(maxSpeed);
 
+            PlayerTickHandler.startDash(player);
+            player.setNoGravity(true);
+            player.noPhysics = true;
             // 对于玩家，使用网络包来设置移动
             if (player instanceof ServerPlayer serverPlayer) {
                 Vec3 newMotion = serverPlayer.getDeltaMovement().add(direction);
@@ -122,7 +127,8 @@ public class Resplendent_Blade extends SwordItem {
         }
     }
 
-    public static void breakBlocks(Player player, Level level) {
+    public static void breakBlocks(Player player) {
+        Level level = player.level();
         double range = 7.0; // 检测范围，单位是方块
         for (int x = (int) (Math.floor(player.getX()) - range); x < Math.floor(player.getX()) + range; x++) {
             for (int y = (int) (Math.floor(player.getY()) - range); y < Math.floor(player.getY()) + range; y++) {
@@ -152,7 +158,7 @@ public class Resplendent_Blade extends SwordItem {
             for (LivingEntity entity : nearbyEntities) {
                 // 对周围生物造成伤害
                 if (entity != player) {
-                    entity.hurt(level.damageSources().magic(), 40f);
+                    entity.hurt(level.damageSources().magic(), 400f);
                 }
             }
         }

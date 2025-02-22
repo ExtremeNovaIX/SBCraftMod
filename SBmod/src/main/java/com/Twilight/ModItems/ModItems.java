@@ -26,7 +26,7 @@ public class ModItems {
     public static final RegistryObject<Item> HEAD_TWILIGHTBUILDER_BLOCK_ITEM = ITEMS.register("head_twilightbuilder_block",
             () -> new BlockItem(HEAD_TWILIGHTBUILDER.get(), new Item.Properties()));
     public static final RegistryObject<Item> RESPLENDENT_BLADE = ITEMS.register("resplendent_blade",
-            () -> new Resplendent_Blade(DIAMOND, 10, 3f, new Item.Properties()));
+            () -> new Resplendent_Blade(DIAMOND, 50, 0.01f, new Item.Properties()));
     public static final RegistryObject<Item> OPERATION_LEAD_SEAL_DISC = ITEMS.register("operation_lead_seal_disc",
             () -> new RecordItem(
                     15,

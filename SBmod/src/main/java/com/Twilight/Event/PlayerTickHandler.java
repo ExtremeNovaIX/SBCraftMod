@@ -1,6 +1,7 @@
 package com.Twilight.Event;
 
 import com.Twilight.ModItems.ModItems;
+import com.Twilight.ModItems.Resplendent_Blade;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -12,50 +13,60 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import static com.Twilight.ModItems.Resplendent_Blade.*;
 
 @Mod.EventBusSubscriber
 public class PlayerTickHandler {
-
-    private static final Map<Player, AABB> originalBoundingBoxes = new HashMap<>();
+    private static final Map<UUID, DashState> playerDashStates = new HashMap<>();
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        ItemStack mainHandItem = event.player.getMainHandItem();
-        if (mainHandItem.getItem() == ModItems.RESPLENDENT_BLADE.get()) {
-        }
-        if(isDashingingTime){
-            event.player.setNoGravity(true);
-            breakBlocks(event.player,event.player.level());
-            DashingTimer++;
-            hurtEnemyInBlade(event.player);
+        if (event.phase == TickEvent.Phase.START) return;
 
-            if(DashingTimer >= DashingTime + 10){
-                isDashingingTime = false;
-                DashingTimer = 0;
-                event.player.setNoGravity(false);
-                event.player.fallDistance = 0;
+        Player player = event.player;
+        UUID playerId = player.getUUID();
+        DashState state = playerDashStates.get(playerId);
+
+        // 处理现有冲刺状态
+        if (state != null && state.isDashing) {
+            state.timer++;
+
+            // 执行逻辑
+            if (!player.level().isClientSide) {
+                Resplendent_Blade.breakBlocks(player);
+                Resplendent_Blade.hurtEnemyInBlade(player);
+            }
+
+            // 结束检测
+            if (state.timer >= Resplendent_Blade.DashingTime + 10) {
+                state.isDashing = false;
+                state.timer = 0;
+                player.setNoGravity(false);
             }
         }
     }
+
+    public static void startDash(Player player) {
+        DashState state = new DashState();
+        state.isDashing = true;
+        state.timer = 0;
+        playerDashStates.put(player.getUUID(), state);
+    }
+
+    private static class DashState {
+        boolean isDashing = false;
+        int timer = 0;
+    }
+
     private static void resetPlayerState(Player player) {
-        // 恢复状态
         isDashingingTime = false;
         DashingTimer = 0;
 
-        // 恢复重力
         player.setNoGravity(false);
         player.fallDistance = 0;
-
-        // 恢复碰撞箱
-        EntityDimensions original = player.getDimensions(player.getPose());
-        player.setBoundingBox(original.makeBoundingBox(player.position()));
-
-        // 恢复能力
-        player.getAbilities().flying = false;
-        player.getAbilities().invulnerable = false;
-        player.onUpdateAbilities();
+        player.noPhysics = false;
     }
 
     @SubscribeEvent
