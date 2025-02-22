@@ -23,11 +23,11 @@ import net.minecraftforge.fml.common.Mod;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static com.Twilight.Event.PlayerTickHandler.dashDirections;
+
 @Mod.EventBusSubscriber
 public class Resplendent_Blade extends SwordItem {
-    public static boolean isDashingingTime = false;
-    public static int DashingTimer = 0;
-    public static int DashingTime = 40;//在这里设置冲刺时间(tick)
+    public static int DashingTime = 10;//在这里设置冲刺时间(tick)
 
 
     // 添加物品描述
@@ -116,14 +116,15 @@ public class Resplendent_Blade extends SwordItem {
 
             PlayerTickHandler.startDash(player);
             player.setNoGravity(true);
-            player.noPhysics = true;
+            dashDirections.put(player.getUUID(), direction);
+
             // 对于玩家，使用网络包来设置移动
             if (player instanceof ServerPlayer serverPlayer) {
                 Vec3 newMotion = serverPlayer.getDeltaMovement().add(direction);
                 serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(serverPlayer.getId(), newMotion));
             }
-            isDashingingTime = true;
-            DashingTimer = 0;
+            PlayerTickHandler.startDash(player);
+            player.setNoGravity(true);
         }
     }
 
