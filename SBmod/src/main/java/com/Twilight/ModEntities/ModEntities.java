@@ -1,10 +1,12 @@
 package com.Twilight.ModEntities;
 
 import com.Twilight.ModEntities.custom.*;
+import com.Twilight.ModItems.ModItems;
 import com.Twilight.ModItems.Resplendent_Blade;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -34,9 +36,16 @@ public class ModEntities {
                     .updateInterval(20) // 设置更新间隔
                     .build("laser_entity"));
     public static final RegistryObject<EntityType<Resplendent_BladeEntity>> RESPLENDENT_BLADE =
-            ENTITIY_TYPES.register("resplendent_blade", () -> EntityType.Builder.of((EntityType<Resplendent_BladeEntity> entityType, Level level) -> new Resplendent_BladeEntity(entityType, level), MobCategory.MISC)
-                    .sized(2F, 3F)
-                    .build("resplendent_blade"));
+            ENTITIY_TYPES.register("resplendent_blade", () ->
+                    EntityType.Builder.<Resplendent_BladeEntity>of(
+                                    (type, level) -> new Resplendent_BladeEntity(
+                                            (EntityType<? extends AbstractArrow>) type,
+                                            level,
+                                            ModItems.RESPLENDENT_BLADE.get()),
+                                    MobCategory.MISC)
+                            .sized(1F, 2F)
+                            .build("resplendent_blade"));
+
 
     public static void register(IEventBus eventBus) {
         ENTITIY_TYPES.register(eventBus);
