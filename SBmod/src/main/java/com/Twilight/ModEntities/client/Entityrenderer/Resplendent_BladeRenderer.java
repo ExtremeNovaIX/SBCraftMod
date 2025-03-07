@@ -1,5 +1,6 @@
 package com.Twilight.ModEntities.client.Entityrenderer;
 
+import com.Twilight.ModEntities.client.EntityModel.Resplendent_BladeModel;
 import com.Twilight.ModEntities.custom.Resplendent_BladeEntity;
 import com.Twilight.SBMod.Main;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -14,6 +15,7 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -31,10 +33,25 @@ public class Resplendent_BladeRenderer extends EntityRenderer<Resplendent_BladeE
     private final ItemRenderer itemRenderer;
     private static final int FULL_BRIGHT = LightTexture.pack(15, 15);
     private static final ResourceLocation RESPLENDENT_BLADE_TEXTURE = new ResourceLocation(Main.MOD_ID, "textures/items/resplendent_blade.png");
+    private final Resplendent_BladeModel<Resplendent_BladeEntity> model;
+
+    private static final String TAG_LIGHT_LEVEL = "LightLevel";
+    private static final int MAX_LIGHT = 15;
+
+    // 在物品NBT中存储光源等级
+    public static void setLightLevel(ItemStack stack, int level) {
+        stack.getOrCreateTag().putInt(TAG_LIGHT_LEVEL, Mth.clamp(level, 0, MAX_LIGHT));
+    }
+
+    // 获取当前光源等级
+    public static int getLightLevel(ItemStack stack) {
+        return stack.hasTag() ? stack.getTag().getInt(TAG_LIGHT_LEVEL) : 0;
+    }
 
     public Resplendent_BladeRenderer(EntityRendererProvider.Context context) {
         super(context);
         this.itemRenderer = context.getItemRenderer();
+        this.model = new Resplendent_BladeModel<>(context.bakeLayer(Resplendent_BladeModel.LAYER_LOCATION));
     }
 
     @Override

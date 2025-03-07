@@ -3,6 +3,7 @@ package com.Twilight.SBMod;
 import com.Twilight.Client.KeyBindings;
 import com.Twilight.ModEntities.ModEntities;
 import com.Twilight.ModEntities.client.EntityLayers.ModModelLayers;
+import com.Twilight.ModEntities.client.EntityModel.Resplendent_BladeModel;
 import com.Twilight.ModEntities.client.EntityModel.Twilight_BuilderModel;
 import com.Twilight.ModEntities.client.Entityrenderer.LaserRenderer;
 import com.Twilight.ModEntities.client.EntityModel.Explosion_SheepModel;
@@ -89,8 +90,7 @@ public class Main {
             event.registerLayerDefinition(ModModelLayers.TWILIGHT_BUILDER_LAYER, Twilight_BuilderModel::createBodyLayer);
             event.registerLayerDefinition(ModModelLayers.EXPLOSION_SHEEP_WOOL_LAYER, Explosion_Sheep_WoolModel::createBodyLayer);
             event.registerLayerDefinition(ModModelLayers.EXPLOSION_SHEEP_LAYER, Explosion_SheepModel::createBodyLayer);
-
-        }
+            event.registerLayerDefinition(ModModelLayers.RESPLENDENT_BLADE_LAYER, Resplendent_BladeModel::createBodyLayer);        }
     }
      //创造模式物品栏
     public static final RegistryObject<CreativeModeTab> SBMOD_TAB = CREATIVE_MODE_TABS.register("sbmod_tab",

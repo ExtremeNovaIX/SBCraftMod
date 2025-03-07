@@ -44,6 +44,7 @@ public class ModEntities {
                                             ModItems.RESPLENDENT_BLADE.get()),
                                     MobCategory.MISC)
                             .sized(1F, 2F)
+                            .noSummon()
                             .build("resplendent_blade"));
 
 

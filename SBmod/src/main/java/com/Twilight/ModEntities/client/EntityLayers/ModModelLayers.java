@@ -11,5 +11,10 @@ public class ModModelLayers {
             new ResourceLocation(Main.MOD_ID, "explosion_sheep"), "main");
     public static final ModelLayerLocation EXPLOSION_SHEEP_WOOL_LAYER = new ModelLayerLocation(
             new ResourceLocation(Main.MOD_ID, "explosion_sheep_wool"), "main");
+    public static final ModelLayerLocation RESPLENDENT_BLADE_LAYER = new ModelLayerLocation(
+            new ResourceLocation(Main.MOD_ID, "resplendent_blade"), "main");
+
+
+
 }
 

@@ -37,8 +37,8 @@ public class PlayerTickHandler {
             state.timer++;
 
             if (!player.level().isClientSide) {
-                Resplendent_Blade.breakBlocks(player);
-                Resplendent_Blade.hurtEnemyInBlade(player);
+//                Resplendent_Blade.breakBlocks(player);
+//                Resplendent_Blade.hurtEnemyInBlade(player);
             }
 
             if(state.isDashing) {

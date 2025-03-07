@@ -27,6 +27,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 import static com.Twilight.Event.PlayerTickHandler.dashDirections;
+import static com.Twilight.ModItems.ModItems.RESPLENDENT_BLADE;
 
 @Mod.EventBusSubscriber
 public class Resplendent_Blade extends SwordItem {
@@ -101,6 +102,8 @@ public class Resplendent_Blade extends SwordItem {
         if (this.swordMode == SwordMode.DASHING) {
             Dashing(player);
             return InteractionResultHolder.success(stack);
+        }else if (this.swordMode == SwordMode.DEFENDING) {
+            throwBlade(player);
         }
         return InteractionResultHolder.pass(stack);
     }
@@ -131,15 +134,16 @@ public class Resplendent_Blade extends SwordItem {
         }
     }
 
-    public static void breakBlocks(Player player) {
+    public static void breakBlocks(Resplendent_BladeEntity bladeEntity) {
+        Player player = (Player) bladeEntity.getOwner();
         Level level = player.level();
         double range = 7.0; // 检测范围，单位是方块
-        for (int x = (int) (Math.floor(player.getX()) - range); x < Math.floor(player.getX()) + range; x++) {
-            for (int y = (int) (Math.floor(player.getY()) - range); y < Math.floor(player.getY()) + range; y++) {
-                for (int z = (int) (Math.floor(player.getZ()) - range); z < Math.floor(player.getZ()) + range; z++) {
+        for (int x = (int) (Math.floor(bladeEntity.getX()) - range); x < Math.floor(bladeEntity.getX()) + range; x++) {
+            for (int y = (int) (Math.floor(bladeEntity.getY()) - range); y < Math.floor(bladeEntity.getY()) + range; y++) {
+                for (int z = (int) (Math.floor(bladeEntity.getZ()) - range); z < Math.floor(bladeEntity.getZ()) + range; z++) {
                     BlockPos pos = new BlockPos(x, y, z);
                     // 计算当前位置与玩家位置之间的距离，如果小于等于范围，则破坏方块
-                    if (Math.sqrt(Math.pow(x - player.getX(), 2) + Math.pow(y - player.getY(), 2) + Math.pow(z - player.getZ(), 2)) <= range) {
+                    if (Math.sqrt(Math.pow(x - bladeEntity.getX(), 2) + Math.pow(y - bladeEntity.getY(), 2) + Math.pow(z - bladeEntity.getZ(), 2)) <= range) {
                         BlockState state = level.getBlockState(pos);
                         if (!state.isAir()) { // 检查方块是否为空
                             level.removeBlock(pos, false); // 破坏方块
@@ -151,20 +155,36 @@ public class Resplendent_Blade extends SwordItem {
         }
     }
 
-    public static void hurtEnemyInBlade(Player player) {
+    public static void hurtEnemyInBlade(Resplendent_BladeEntity bladeEntity) {
+        Player player = (Player) bladeEntity.getOwner();
         Level level = player.level();
-        if (!level.isClientSide) { // 服务端逻辑
+        if (!level.isClientSide) {
             // 检测周围生物并造成伤害
             double range = 9.0; // 检测范围，单位是方块
             List<LivingEntity> nearbyEntities = level.getEntitiesOfClass(LivingEntity.class,
-                    new AABB(player.getX() - range, player.getY() - range, player.getZ() - range,
-                            player.getX() + range, player.getY() + range, player.getZ() + range));
+                    new AABB(bladeEntity.getX() - range, bladeEntity.getY() - range, bladeEntity.getZ() - range,
+                            bladeEntity.getX() + range, bladeEntity.getY() + range, bladeEntity.getZ() + range));
             for (LivingEntity entity : nearbyEntities) {
                 // 对周围生物造成伤害
                 if (entity != player) {
-                    entity.hurt(level.damageSources().magic(), 400f);
+                    entity.hurt(level.damageSources().magic(), 500f);
                 }
             }
+        }
+    }
+
+    public void throwBlade(Player player) {
+        Level level = player.level();
+        if (!level.isClientSide) {
+            Resplendent_BladeEntity bladeEntity = new Resplendent_BladeEntity(ModEntities.RESPLENDENT_BLADE.get(), level,RESPLENDENT_BLADE.get());
+            bladeEntity.setPos(player.getX(), player.getY(), player.getZ());
+            bladeEntity.setOwner(player);
+            // 设置实体的方向
+            Vec3 lookVec = player.getLookAngle();
+            bladeEntity.shoot(lookVec.x, lookVec.y, lookVec.z, 1.5f, 0);
+            //设置实体速度
+            bladeEntity.setDeltaMovement(lookVec.x * 1.5f, lookVec.y * 1.5f, lookVec.z * 1.5f);
+            level.addFreshEntity(bladeEntity);
         }
     }
 }
