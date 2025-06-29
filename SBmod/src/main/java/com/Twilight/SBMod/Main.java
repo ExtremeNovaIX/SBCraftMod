@@ -111,6 +111,7 @@ public class Main {
                 output.accept(THUNDER_ROD.get());
                 output.accept(LASER_CANNON.get());
                 output.accept(RESPLENDENT_BLADE.get());
+                output.accept(THROWABLE_FIREBALL.get());
                 // 添加更多物品
             })
             .build());

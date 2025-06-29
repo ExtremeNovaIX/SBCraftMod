@@ -1,4 +1,5 @@
 package com.Twilight.ModItems;
+
 import com.Twilight.ModSounds.ModSounds;
 import net.minecraft.world.item.*;
 import net.minecraftforge.registries.DeferredRegister;
@@ -56,6 +57,13 @@ public class ModItems {
                     ModSounds.MISTY_MEMORY_DISC,
                     new Item.Properties().stacksTo(1).rarity(Rarity.RARE),
                     4840
+            )
+    );
+
+    public static final RegistryObject<Item> THROWABLE_FIREBALL = ITEMS.register("throwable_fireball",
+            () -> new Throwable_Fireball(
+                    new Item.Properties()
+                            .stacksTo(64)
             )
     );
 }
